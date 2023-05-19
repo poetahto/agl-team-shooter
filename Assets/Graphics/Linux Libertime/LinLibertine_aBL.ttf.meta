@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 07b476350e5df4b4f9e8c3567006d29d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Linux Libertine Slanted
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 719f48aefc5c052438faf35ca26bbf30, type: 3}
+  - {fileID: 12800000, guid: 6085af756db525646b9d97f61af9be62, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
