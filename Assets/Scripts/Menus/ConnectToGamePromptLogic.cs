@@ -16,7 +16,7 @@ namespace DefaultNamespace
 
         private void Awake()
         {
-            _visibility = new FadeTransition(canvasGroup);
+            _visibility = CommonTransitions.Popup(canvasGroup);
             _visibility.Show();
         }
 

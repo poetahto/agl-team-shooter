@@ -1,73 +1,61 @@
-﻿using System;
-using System.Collections;
-using System.Threading;
-using UniRx;
+﻿using ElRaccoone.Tweens;
 using UnityEngine;
+using IEnumerator = System.Collections.IEnumerator;
 
 namespace Core
 {
-    public class FadeTransition : IVisibilityTransition
+    public class SlideUpTransition : VisibilityTransitionBase
+    {
+        private const float Offset = 50f;
+
+        private readonly Transform _transform;
+        private readonly float _duration;
+        private readonly float _initialY;
+
+        public SlideUpTransition(Transform transform, float duration = 0.1f, bool startVisible = false) : base(startVisible)
+        {
+            _transform = transform;
+            _duration = duration;
+            _initialY = transform.position.y;
+        }
+
+        protected override IEnumerator ShowCoroutine()
+        {
+            yield return _transform
+                .TweenPositionY(_initialY, _duration)
+                .SetFrom(_initialY - Offset)
+                .SetEaseQuadOut()
+                .Yield();
+        }
+
+        protected override IEnumerator HideCoroutine()
+        {
+            yield return _transform
+                .TweenPositionY(_initialY + Offset, _duration)
+                .SetEaseQuadIn()
+                .Yield();
+        }
+    }
+
+    public class FadeTransition : VisibilityTransitionBase
     {
         private readonly CanvasGroup _canvasGroup;
         private readonly float _duration;
-        private IDisposable _animation;
 
-        public event Action<bool> VisibilityChanged;
-
-        public FadeTransition(CanvasGroup canvasGroup, float duration = 0.1f, bool startVisible = false)
+        public FadeTransition(CanvasGroup canvasGroup, float duration = 0.1f, bool startVisible = false) : base(startVisible)
         {
             _canvasGroup = canvasGroup;
             _duration = duration;
-
-            // Applying default values to the canvas group.
-            _canvasGroup.alpha = startVisible ? 1 : 0;
-            _canvasGroup.interactable = startVisible;
-            _canvasGroup.blocksRaycasts = startVisible;
         }
 
-        public bool IsVisible { get; private set; }
-
-        public void Show()
+        protected override IEnumerator ShowCoroutine()
         {
-            IEnumerator Coroutine(CancellationToken ct)
-            {
-                _canvasGroup.interactable = true;
-                _canvasGroup.blocksRaycasts = true;
-                yield return FadeTo(1, ct);
-                IsVisible = true;
-                VisibilityChanged?.Invoke(true);
-            }
-
-            _animation?.Dispose();
-            _animation = Observable.FromMicroCoroutine(Coroutine).Subscribe();
+            yield return _canvasGroup.TweenCanvasGroupAlpha(1, _duration).Yield();
         }
 
-        public void Hide()
+        protected override IEnumerator HideCoroutine()
         {
-            IEnumerator Coroutine(CancellationToken ct)
-            {
-                yield return FadeTo(0, ct);
-                _canvasGroup.interactable = false;
-                _canvasGroup.blocksRaycasts = false;
-                IsVisible = false;
-                VisibilityChanged?.Invoke(false);
-            }
-
-            _animation?.Dispose();
-            _animation = Observable.FromMicroCoroutine(Coroutine).Subscribe();
-        }
-
-        private IEnumerator FadeTo(float value, CancellationToken ct)
-        {
-            while (Math.Abs(_canvasGroup.alpha - value) > 0.01f && !ct.IsCancellationRequested)
-            {
-                float t = 1 / _duration * Time.deltaTime;
-                _canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, value, t);
-                yield return null;
-            }
-
-            if (!ct.IsCancellationRequested)
-                _canvasGroup.alpha = value;
+            yield return _canvasGroup.TweenCanvasGroupAlpha(0, _duration).Yield();
         }
     }
 }
