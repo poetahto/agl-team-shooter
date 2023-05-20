@@ -1,14 +1,15 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using FishNet;
 using FishNet.Managing.Scened;
-using FishNet.Transporting;
 using UnityEngine;
 
 public interface INetworkInterface
 {
     UniTask Host(ushort port);
     UniTask Connect(string address, ushort port);
-    void LoadScene(string sceneName);
+    UniTask LoadScene(string sceneName);
+    void Disconnect();
 }
 
 public class FishNetNetworkInterface : INetworkInterface
@@ -27,9 +28,16 @@ public class FishNetNetworkInterface : INetworkInterface
         await UniTask.WaitUntil(() => InstanceFinder.ClientManager.Started);
     }
 
-    public void LoadScene(string sceneName)
+    public void Disconnect()
+    {
+        InstanceFinder.ClientManager.StopConnection();
+    }
+
+    public async UniTask LoadScene(string sceneName)
     {
         Debug.Log($"Loading scene {sceneName}");
+        IDisposable loadingScreen = await Services.LoadingScreenFactory.SlideRightColor(Color.black);
         InstanceFinder.SceneManager.LoadGlobalScenes(new SceneLoadData(sceneName){ReplaceScenes = ReplaceOption.All});
+        loadingScreen.Dispose();
     }
 }

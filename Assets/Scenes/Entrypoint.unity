@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 615839532}
   - component: {fileID: 615839531}
+  - component: {fileID: 615839533}
   m_Layer: 0
   m_Name: Services
   m_TagString: Untagged
@@ -165,11 +166,25 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1359999948}
+  - {fileID: 895466781}
   - {fileID: 1324208840}
   - {fileID: 701587959}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &615839533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615839530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c96cc03c4c4b179f314750c8b0f2ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstScene: Assets/Scenes/MainMenu.unity
 --- !u!1 &701587958
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +253,52 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!1 &895466780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 895466781}
+  - component: {fileID: 895466782}
+  m_Layer: 0
+  m_Name: Loading Screen Factory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &895466781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895466780}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 615839532}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &895466782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895466780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df0dca93a8d44ef4b7ed3b0c0f941c62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorScreenPrefab: {fileID: 2062332962138068557, guid: 4f650ddc749b35d43b7d419fadfc8bc6,
+    type: 3}
 --- !u!1 &1324208839
 GameObject:
   m_ObjectHideFlags: 0

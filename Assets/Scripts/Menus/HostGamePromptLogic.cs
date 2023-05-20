@@ -1,4 +1,5 @@
 ﻿using Core;
+using Cysharp.Threading.Tasks;
 using Poetools.UI.Builders;
 using Poetools.UI.Items;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace DefaultNamespace
             _visibility.HideThenDestroy();
 
             if (ushort.TryParse(_port, out ushort result))
-                Services.GameplaySystem.HostGame(result);
+                Services.GameplaySystem.HostGame(result).Forget();
         }
     }
 }

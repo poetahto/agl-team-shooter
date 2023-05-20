@@ -10,7 +10,7 @@ namespace Core
     // todo: test to make sure this works.
     public class Entrypoint
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static async Task CheckForAwakeAsync()
         {
             if (SceneManager.GetActiveScene().name != "Entrypoint")
@@ -24,8 +24,8 @@ namespace Core
                 Debug.Log($"{"[EDITOR ONLY]".Bold()} Trying to load {originalScene} after Entrypoint...");
                 SceneManager.LoadScene(originalScene);
 #else
-                Debug.LogError("Entrypoint must be initialized before anything else!");
-                Application.Quit();
+                Debug.LogError($"{SceneManager.GetActiveScene().name} - Entrypoint must be initialized before anything else!");
+                // Application.Quit();
 #endif
             }
         }

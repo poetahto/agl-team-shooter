@@ -6,24 +6,24 @@ namespace Core
 {
     public class SlideUpTransition : VisibilityTransitionBase
     {
-        private const float Offset = 50f;
-
         private readonly Transform _transform;
         private readonly float _duration;
         private readonly float _initialY;
+        private readonly float _offset;
 
-        public SlideUpTransition(Transform transform, float duration = 0.1f, bool startVisible = false) : base(startVisible)
+        public SlideUpTransition(Transform transform, float duration = 0.1f, float offset = 50f, bool startVisible = false) : base(startVisible)
         {
             _transform = transform;
             _duration = duration;
             _initialY = transform.position.y;
+            _offset = offset;
         }
 
         protected override IEnumerator ShowCoroutine()
         {
             if (_transform != null)
                 yield return _transform.TweenPositionY(_initialY, _duration)
-                    .SetFrom(_initialY - Offset)
+                    .SetFrom(_initialY - _offset)
                     .SetEaseQuadOut()
                     .Yield();
         }
@@ -32,7 +32,7 @@ namespace Core
         {
             if (_transform != null)
             {
-                yield return _transform.TweenPositionY(_initialY + Offset, _duration)
+                yield return _transform.TweenPositionY(_initialY + _offset, _duration)
                     .SetEaseQuadIn()
                     .Yield();
 

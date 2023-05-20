@@ -1,4 +1,5 @@
 ﻿using Core;
+using Cysharp.Threading.Tasks;
 using Poetools.UI.Builders;
 using Poetools.UI.Items;
 using UniRx;
@@ -21,7 +22,7 @@ public class PauseMenuLogic : MonoBehaviour
         new ExistingMenuBuilder()
             .Register("resume", new Button(_visibility.Hide))
             .Register("settings", new Button(Services.PopupFactory.ShowSettings))
-            .Register("disconnect", new Button(Services.GameplaySystem.StopGame))
+            .Register("disconnect", new Button(() => Services.GameplaySystem.StopGame()))
             .Build(gameObject)
             .AddTo(this);
     }

@@ -1,13 +1,14 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public interface IGameplaySystem
 {
     bool TryGetServices(out IGameplayServices services);
     UniTask HostGame(ushort post);
     UniTask ConnectToGame(string address, ushort port);
-    void StopGame();
+    UniTask StopGame();
 }
 
 public class GameplaySystem : MonoBehaviour, IGameplaySystem
@@ -40,7 +41,7 @@ public class GameplaySystem : MonoBehaviour, IGameplaySystem
     {
         InitializeServices();
         await _services.NetworkInterface.Host(port);
-        _services.NetworkInterface.LoadScene("TestingMap");
+        await _services.NetworkInterface.LoadScene("TestingMap");
     }
 
     public async UniTask ConnectToGame(string address, ushort port)
@@ -49,10 +50,15 @@ public class GameplaySystem : MonoBehaviour, IGameplaySystem
         await _services.NetworkInterface.Connect(address, port);
     }
 
-    public void StopGame()
+    public async UniTask StopGame()
     {
+        Debug.Log("Stopping game.");
         _isRunning = false;
-        Destroy(_serviceInstance);
+        _services.NetworkInterface.Disconnect();
+        var loadingScreen = await Services.LoadingScreenFactory.SlideRightColor(Color.black);
+        Destroy(_serviceInstance.gameObject);
+        await SceneManager.LoadSceneAsync("MainMenu");
+        loadingScreen.Dispose();
     }
 
     private void InitializeServices()
