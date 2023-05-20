@@ -13,7 +13,7 @@ public class PauseMenuLogic : MonoBehaviour
 
     private void Awake()
     {
-        _visibility = new DefaultVisibilityTransition(canvasGroup, startVisible:false);
+        _visibility = new FadeTransition(canvasGroup);
     }
 
     private void Start()

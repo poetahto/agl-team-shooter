@@ -22,7 +22,7 @@ public class SettingsMenuLogic : MonoBehaviour
 
     private void Awake()
     {
-        _visibility = new DefaultVisibilityTransition(canvasGroup);
+        _visibility = new FadeTransition(canvasGroup);
         _visibility.Show();
     }
 
