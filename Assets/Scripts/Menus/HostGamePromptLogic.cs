@@ -10,12 +10,15 @@ namespace DefaultNamespace
         [SerializeField]
         private CanvasGroup canvasGroup;
 
+        [SerializeField]
+        private Transform target;
+
         private string _port;
         private IVisibilityTransition _visibility;
 
         private void Awake()
         {
-            _visibility = CommonTransitions.Popup(canvasGroup);
+            _visibility = CommonTransitions.Popup(canvasGroup, target);
             _visibility.Show();
         }
 
@@ -36,6 +39,8 @@ namespace DefaultNamespace
 
         private void HandleHostGame()
         {
+            _visibility.HideThenDestroy();
+
             if (ushort.TryParse(_port, out ushort result))
                 Services.GameplaySystem.HostGame(result);
         }

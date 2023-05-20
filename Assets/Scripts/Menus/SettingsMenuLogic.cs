@@ -11,6 +11,9 @@ public class SettingsMenuLogic : MonoBehaviour
     private CanvasGroup canvasGroup;
 
     [SerializeField]
+    private Transform target;
+
+    [SerializeField]
     private GameObject videoSettings;
 
     [SerializeField]
@@ -22,7 +25,7 @@ public class SettingsMenuLogic : MonoBehaviour
 
     private void Awake()
     {
-        _visibility = CommonTransitions.Popup(canvasGroup);
+        _visibility = CommonTransitions.SlideAndFade(canvasGroup, target);
         _visibility.Show();
     }
 

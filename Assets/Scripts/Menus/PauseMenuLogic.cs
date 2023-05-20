@@ -13,7 +13,7 @@ public class PauseMenuLogic : MonoBehaviour
 
     private void Awake()
     {
-        _visibility = CommonTransitions.Popup(canvasGroup);
+        _visibility = CommonTransitions.Fade(canvasGroup);
     }
 
     private void Start()

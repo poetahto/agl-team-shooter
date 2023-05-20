@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 4137468194794640322}
+  target: {fileID: 8292618290385975189}
 --- !u!1 &5570980670188790730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,7 +1205,7 @@ PrefabInstance:
     - target: {fileID: 433483921088184914, guid: 00b8892acc1335b44828346dce47504f,
         type: 3}
       propertyPath: m_Name
-      value: start
+      value: connect
       objectReference: {fileID: 0}
     - target: {fileID: 433483921088184915, guid: 00b8892acc1335b44828346dce47504f,
         type: 3}

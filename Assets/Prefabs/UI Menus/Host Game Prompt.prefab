@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 7803539807530399741}
+  target: {fileID: 6536406098093577597}
 --- !u!1 &6536406098093577596
 GameObject:
   m_ObjectHideFlags: 0

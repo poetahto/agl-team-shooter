@@ -17,14 +17,18 @@ namespace Core
 
         protected override IEnumerator ShowCoroutine()
         {
-            _canvasGroup.EnableInteraction();
+            if (_canvasGroup != null)
+                _canvasGroup.EnableInteraction();
+
             yield return new WaitForSeconds(_duration);
         }
 
         protected override IEnumerator HideCoroutine()
         {
             yield return new WaitForSeconds(_duration);
-            _canvasGroup.DisableInteraction();
+
+            if (_canvasGroup != null)
+                _canvasGroup.DisableInteraction();
         }
     }
 }

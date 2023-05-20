@@ -405,6 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 5887827632662128384}
+  target: {fileID: 1420215464626844178}
   videoSettings: {fileID: 4740661583300841391}
   gameplaySettings: {fileID: 1685996961836392254}
 --- !u!1001 &662971282838595269
