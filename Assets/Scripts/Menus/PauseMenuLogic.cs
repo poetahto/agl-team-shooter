@@ -1,5 +1,4 @@
 ﻿using Core;
-using Cysharp.Threading.Tasks;
 using Poetools.UI.Builders;
 using Poetools.UI.Items;
 using UniRx;
@@ -11,6 +10,7 @@ public class PauseMenuLogic : MonoBehaviour
     private CanvasGroup canvasGroup;
 
     private IVisibilityTransition _visibility;
+    private bool _settingsShown;
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class PauseMenuLogic : MonoBehaviour
     {
         new ExistingMenuBuilder()
             .Register("resume", new Button(_visibility.Hide))
-            .Register("settings", new Button(Services.PopupFactory.ShowSettings))
+            .Register("settings", new Button(HandleShowSettings))
             .Register("disconnect", new Button(() => Services.GameplaySystem.StopGame()))
             .Build(gameObject)
             .AddTo(this);
@@ -29,7 +29,13 @@ public class PauseMenuLogic : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !_settingsShown)
             _visibility.Toggle();
+    }
+
+    private void HandleShowSettings()
+    {
+        _settingsShown = true;
+        Services.PopupFactory.ShowSettings(() => _settingsShown = false);
     }
 }

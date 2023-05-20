@@ -11,9 +11,9 @@ public class MainMenuLogic : MonoBehaviour
         IPopupFactory popups = Services.PopupFactory;
 
         new ExistingMenuBuilder()
-            .Register("host", new Button(popups.PromptHostGame))
-            .Register("connect", new Button(popups.PromptConnectGame))
-            .Register("settings", new Button(popups.ShowSettings))
+            .Register("host", new Button(() => popups.PromptHostGame()))
+            .Register("connect", new Button(() => popups.PromptConnectGame()))
+            .Register("settings", new Button(() => popups.ShowSettings()))
             .Register("quit", CommonMenuItems.QuitGameButton())
             .Build(gameObject)
             .AddTo(this);

@@ -38,8 +38,6 @@ public class LoadingScreenFactory : MonoBehaviour, ILoadingScreenFactory
         instance.rectTransform.pivot = new Vector2(1, 0.5f);
         instance.rectTransform.TweenPositionX(Screen.width, duration).SetFrom(0).SetEaseQuadOut();
         await UniTask.Delay(TimeSpan.FromSeconds(duration));
-        // IVisibilityTransition transition = new SlideUpTransition(instance.transform, duration);
-        // transition.Show();
         return new DisposableAction(() => instance.rectTransform.TweenPositionX(Screen.width * 2, duration).SetEaseQuadIn());
     }
 }

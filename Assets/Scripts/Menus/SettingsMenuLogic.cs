@@ -60,14 +60,6 @@ public class SettingsMenuLogic : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             _visibility.HideThenDestroy(gameObject);
     }
-
-    private void OnGUI()
-    {
-        GUILayout.Label($"Sensitivity: {_settings.Sensitivity}");
-        GUILayout.Label($"FOV: {_settings.FOV}");
-        GUILayout.Label($"Username: {_settings.Username}");
-        GUILayout.Label($"Quality: {QualitySettings.names[QualitySettings.GetQualityLevel()]}");
-    }
 }
 
 public class GameplaySettings
