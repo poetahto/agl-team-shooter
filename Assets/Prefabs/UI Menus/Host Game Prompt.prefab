@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 2578535689053092017}
-  target: {fileID: 0}
 --- !u!1001 &3380842892057229634
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -903,7 +902,7 @@ PrefabInstance:
     - target: {fileID: 3570654385558361717, guid: 1f650ef6bfc85a449b3fececfd0bb85c,
         type: 3}
       propertyPath: m_Name
-      value: port
+      value: hosting_port
       objectReference: {fileID: 0}
     - target: {fileID: 3570654385558361718, guid: 1f650ef6bfc85a449b3fececfd0bb85c,
         type: 3}

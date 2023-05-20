@@ -13,8 +13,7 @@ public class PauseMenuLogic : MonoBehaviour
 
     private void Awake()
     {
-        _visibility = new DefaultVisibilityTransition(canvasGroup);
-        _visibility.Show();
+        _visibility = new DefaultVisibilityTransition(canvasGroup, startVisible:false);
     }
 
     private void Start()
@@ -25,5 +24,11 @@ public class PauseMenuLogic : MonoBehaviour
             .Register("disconnect", new Button(Services.GameplaySystem.StopGame))
             .Build(gameObject)
             .AddTo(this);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            _visibility.Toggle();
     }
 }

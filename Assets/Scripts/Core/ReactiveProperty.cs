@@ -31,5 +31,10 @@ namespace Core
         public static implicit operator T(ReactiveProperty<T> property) => property.Value;
     }
 
-    public class BoolReactiveProperty : ReactiveProperty<bool> {}
+    public class BoolReactiveProperty : ReactiveProperty<bool>
+    {
+        public BoolReactiveProperty(bool initialValue = default) : base(initialValue)
+        {
+        }
+    }
 }

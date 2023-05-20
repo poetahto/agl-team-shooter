@@ -1,5 +1,4 @@
-﻿using System;
-using Core;
+﻿using Core;
 using Poetools.UI.Builders;
 using Poetools.UI.Items;
 using UnityEngine;
@@ -24,8 +23,8 @@ namespace DefaultNamespace
         private void Start()
         {
             new ExistingMenuBuilder()
-                .Register("connection_address", new StringInputField(value => _address = value).WithLabel("IP Address"))
-                .Register("connection_port", new StringInputField(value => _port = value).WithLabel("Port"))
+                .Register("connection_address", new StringInputField(value => _address = value))
+                .Register("connection_port", new StringInputField(value => _port = value))
                 .Register("connect", new Button(HandleConnectToGame, "Connect"))
                 .Register("cancel", new Button(() => _visibility.HideThenDestroy(gameObject), "Cancel"))
                 .Build(gameObject);

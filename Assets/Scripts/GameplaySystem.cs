@@ -1,11 +1,12 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public interface IGameplaySystem
 {
     bool TryGetServices(out IGameplayServices services);
-    void HostGame(ushort post);
-    void ConnectToGame(string address, ushort port);
+    UniTask HostGame(ushort post);
+    UniTask ConnectToGame(string address, ushort port);
     void StopGame();
 }
 
@@ -35,16 +36,17 @@ public class GameplaySystem : MonoBehaviour, IGameplaySystem
         return false;
     }
 
-    public void HostGame(ushort port)
+    public async UniTask HostGame(ushort port)
     {
         InitializeServices();
-        _services.NetworkInterface.Host(port);
+        await _services.NetworkInterface.Host(port);
+        _services.NetworkInterface.LoadScene("TestingMap");
     }
 
-    public void ConnectToGame(string address, ushort port)
+    public async UniTask ConnectToGame(string address, ushort port)
     {
         InitializeServices();
-        _services.NetworkInterface.Connect(address, port);
+        await _services.NetworkInterface.Connect(address, port);
     }
 
     public void StopGame()

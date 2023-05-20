@@ -4,14 +4,16 @@ namespace Core
 {
     public interface IVisibilityTransition
     {
-        public void Show();
-        public void Hide();
-
         public BoolReactiveProperty IsVisible { get; }
     }
 
     public static class VisibilityTransitionExtensions
     {
+        public static void SetVisible(this IVisibilityTransition transition, bool isVisible) => transition.IsVisible.Value = isVisible;
+        public static void Hide(this IVisibilityTransition transition) => transition.SetVisible(false);
+        public static void Show(this IVisibilityTransition transition) => transition.SetVisible(true);
+        public static void Toggle(this IVisibilityTransition transition) => transition.SetVisible(!transition.IsVisible);
+
         public static void HideThenDestroy(this IVisibilityTransition transition, params GameObject[] objects)
         {
             void HandleVisibilityChange(bool isVisible)
@@ -34,27 +36,21 @@ namespace Core
     {
         private readonly CanvasGroup _target;
 
-        public DefaultVisibilityTransition(CanvasGroup target)
+        public DefaultVisibilityTransition(CanvasGroup target, bool startVisible = false)
         {
             _target = target;
+            IsVisible.Value = startVisible;
+            IsVisible.changed.AddListener(HandleVisibleChanged);
+            HandleVisibleChanged(startVisible);
+        }
+
+        private void HandleVisibleChanged(bool isVisible)
+        {
+            _target.alpha = isVisible ? 1 : 0;
+            _target.interactable = isVisible;
+            _target.blocksRaycasts = isVisible;
         }
 
         public BoolReactiveProperty IsVisible { get; } = new BoolReactiveProperty();
-
-        public void Show()
-        {
-            _target.alpha = 1;
-            _target.interactable = true;
-            _target.blocksRaycasts = true;
-            IsVisible.Value = true;
-        }
-
-        public void Hide()
-        {
-            _target.alpha = 0;
-            _target.interactable = false;
-            _target.blocksRaycasts = false;
-            IsVisible.Value = false;
-        }
     }
 }
