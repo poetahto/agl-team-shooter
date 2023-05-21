@@ -19,6 +19,7 @@ public class GameplaySystem : MonoBehaviour, IGameplaySystem
     private bool _isRunning;
     private IGameplayServices _services;
     private GameplayServices _serviceInstance;
+    private IClient _activeClient;
 
     private void Awake()
     {
@@ -40,14 +41,18 @@ public class GameplaySystem : MonoBehaviour, IGameplaySystem
     public async UniTask HostGame(ushort port)
     {
         InitializeServices();
-        await _services.NetworkInterface.Host(port);
+        _activeClient = await _services.NetworkInterface.Host(port);
+        _services.Lobby.AddClient(_activeClient);
+        print($"hosted game with client {_activeClient.Id}");
         await _services.NetworkInterface.LoadScene("TestingMap");
     }
 
     public async UniTask ConnectToGame(string address, ushort port)
     {
         InitializeServices();
-        await _services.NetworkInterface.Connect(address, port);
+        _activeClient = await _services.NetworkInterface.Connect(address, port);
+        _services.Lobby.AddClient(_activeClient);
+        print($"joined game with client {_activeClient.Id}");
     }
 
     public async UniTask StopGame()

@@ -14,7 +14,9 @@ namespace DefaultNamespace
         private IEnumerator Start()
         {
             yield return null;
+#if !UNITY_EDITOR
             SceneManager.LoadScene(firstScene);
+#endif
         }
     }
 }
