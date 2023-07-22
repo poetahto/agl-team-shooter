@@ -43,7 +43,7 @@ namespace DefaultNamespace
             _visibility.HideThenDestroy();
 
             if (ushort.TryParse(_port, out ushort result))
-                Services.GameplaySystem.HostGame(result).Forget();
+                Services.GameplayRunner.HostGame(result).Forget();
         }
     }
 }

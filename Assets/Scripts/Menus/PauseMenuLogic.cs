@@ -22,7 +22,7 @@ public class PauseMenuLogic : MonoBehaviour
         new ExistingMenuBuilder()
             .Register("resume", new Button(_visibility.Hide))
             .Register("settings", new Button(HandleShowSettings))
-            .Register("disconnect", new Button(() => Services.GameplaySystem.StopGame()))
+            .Register("disconnect", new Button(() => Services.GameplayRunner.StopGame()))
             .Build(gameObject)
             .AddTo(this);
     }

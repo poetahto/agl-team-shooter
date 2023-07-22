@@ -1,69 +1,77 @@
 ﻿using System;
+using System.Collections.Generic;
+using FishNet;
+using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using UniRx;
-using UnityEngine;
+using FishNet.Transporting;
 
-public class Lobby : NetworkBehaviour, ILobby
+public class ClientData
 {
-    [SerializeField]
-    private GameplayServices services;
+    public string Username;
+}
 
+public class Lobby : NetworkBehaviour
+{
     // The list that is actually synchronized between client/server
     [SyncObject]
-    private readonly SyncList<Client> _syncedClients = new SyncList<Client>();
+    private readonly SyncList<ClientData> _clients = new SyncList<ClientData>();
 
-    // A user-friendly list that is easier to manage callbacks for in C# scripts, and free from FishNet.
-    private ReactiveCollection<Client> _clients = new ReactiveCollection<Client>();
-    public IReadOnlyReactiveCollection<Client> Clients => _clients;
+    private Dictionary<NetworkConnection, ClientData> _connectionsToClients
+        = new Dictionary<NetworkConnection, ClientData>();
 
-    private void Awake()
+    public SyncReactiveList<ClientData> Clients { get; private set; }
+
+    public override void OnStartNetwork()
     {
-        _syncedClients.OnChange += HandleClientChange;
-        services.Lobby = this;
+        base.OnStartNetwork();
+        print("init lobby");
+        Clients = new SyncReactiveList<ClientData>(_clients);
+
+        if (IsServer)
+        {
+            ServerManager.OnRemoteConnectionState += Server_HandleRemoteConnectionState;
+        }
+
+        if (IsHost)
+        {
+            Server_AddClient(ClientManager.Connection, new ClientData{Username = "Host"});
+        }
     }
 
     [Server]
-    public void AddClient(Client client)
+    private void Server_AddClient(NetworkConnection connection, ClientData client)
     {
-        _syncedClients.Add(client);
+        _clients.Add(client);
+        _connectionsToClients.Add(connection, client);
     }
 
     [Server]
-    public void RemoveClient(Client client)
+    private void Server_RemoveClient(NetworkConnection connection)
     {
-        _syncedClients.Remove(client);
+        _clients.Remove(_connectionsToClients[connection]);
+        _connectionsToClients.Remove(connection);
     }
 
-    private void HandleClientChange(SyncListOperation operation, int index, Client _, Client client, bool asServer)
+    [Server]
+    private void Server_HandleRemoteConnectionState(NetworkConnection connection, RemoteConnectionStateArgs args)
     {
-        // Prevent the host from accidentally handling doubled messages.
-        if (IsHost && asServer)
+        // Don't allow duplicate connections from the host.
+        if (connection == InstanceFinder.ClientManager.Connection)
             return;
 
-        switch (operation)
+        switch (args.ConnectionState)
         {
-            case SyncListOperation.Add:
-                print("add");
-                _clients.Add(client);
+            case RemoteConnectionState.Started:
+                print("connected");
+                Server_AddClient(connection, new ClientData{Username = $"Player {args.ConnectionId}"});
                 break;
-            case SyncListOperation.Insert:
-                _clients.Insert(index, client);
-                break;
-            case SyncListOperation.Set:
-                _clients[index] = client;
-                break;
-            case SyncListOperation.RemoveAt:
-                _clients.RemoveAt(index);
-                break;
-            case SyncListOperation.Clear:
-                _clients.Clear();
-                break;
-            case SyncListOperation.Complete:
-                // Do nothing.
+            case RemoteConnectionState.Stopped:
+                print("left");
+                Server_RemoveClient(connection);
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(operation), operation, null);
+                throw new ArgumentOutOfRangeException();
         }
     }
 }

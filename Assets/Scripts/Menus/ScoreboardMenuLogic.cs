@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core;
+using FishNet.Object;
 using TMPro;
 using UniRx;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class ScoreboardMenuLogic : MonoBehaviour
+    public class ScoreboardMenuLogic : NetworkBehaviour
     {
         [SerializeField]
         private CanvasGroup canvasGroup;
@@ -20,25 +22,29 @@ namespace DefaultNamespace
         [SerializeField]
         private TMP_Text title;
 
-        private ILobby _lobby;
+        private Lobby _lobby;
         private IVisibilityTransition _visibility;
         private bool _shown;
-        private Dictionary<Client, ScoreboardNameView> _viewLookup = new Dictionary<Client, ScoreboardNameView>();
+        private Dictionary<ClientData, ScoreboardNameView> _viewLookup = new Dictionary<ClientData, ScoreboardNameView>();
 
         private void Start()
         {
             _visibility = CommonTransitions.Fade(canvasGroup);
+        }
 
-            if (Services.GameplaySystem.TryGetServices(out IGameplayServices services))
-            {
-                _lobby = services.Lobby;
-                _lobby.Clients.ObserveCountChanged(true).Subscribe(HandleCountChanged);
-                _lobby.Clients.ObserveAdd().Subscribe(addData => AddClientView(addData.Value));
-                _lobby.Clients.ObserveRemove().Subscribe(removeData => RemoveClientView(removeData.Value));
+        public override void OnStartNetwork()
+        {
+            base.OnStartNetwork();
+            print("init scoreboard");
+            _lobby = Services.GameplayRunner.Systems.lobby;
+            _lobby.Clients.ObserveCountChanged(true).Subscribe(HandleCountChanged);
+            _lobby.Clients.ObserveAdd().Subscribe(addData => AddClientView(addData.Value));
+            _lobby.Clients.ObserveRemove().Subscribe(removeData => RemoveClientView(removeData.Value));
 
-                // foreach (var client in _lobby.Clients)
-                //     AddClientView(client);
-            }
+            foreach (var client in _lobby.Clients)
+                AddClientView(client);
+
+            HandleCountChanged(_lobby.Clients.Count);
         }
 
         private void HandleCountChanged(int count)
@@ -46,18 +52,18 @@ namespace DefaultNamespace
             title.text = $"{"Lobby".Bold().Yellow()} [{count} Connected]";
         }
 
-        private void AddClientView(Client client)
+        private void AddClientView(ClientData client)
         {
             var instance = Instantiate(nameViewPrefab, contentParent);
-            instance.nameText.text = $"{client.Username} [ID={client.Id}]";
+            instance.nameText.text = $"{client.Username}";
             _viewLookup.Add(client, instance);
         }
 
-        private void RemoveClientView(Client client)
+        private void RemoveClientView(ClientData client)
         {
-            var instance = _viewLookup[client];
+            ScoreboardNameView instance = _viewLookup[client];
             _viewLookup.Remove(client);
-            Destroy(instance);
+            Destroy(instance.gameObject);
         }
 
         private void Update()

@@ -30,7 +30,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1605409960419539804}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -73,6 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5597997723677973390}
   - component: {fileID: 460427162686992599}
+  - component: {fileID: 1498942314737555842}
   m_Layer: 0
   m_Name: Scoreboard
   m_TagString: Untagged
@@ -87,6 +87,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108997401350935501}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -94,7 +95,6 @@ Transform:
   m_Children:
   - {fileID: 2910246757328709860}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &460427162686992599
 MonoBehaviour:
@@ -108,11 +108,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62482a6fa46b4677bd4559ee45fff4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 1498942314737555842}
+  _networkObjectCache: {fileID: 0}
   canvasGroup: {fileID: 5760335684051506251}
   nameViewPrefab: {fileID: 3390887509273227649, guid: d2378750d0d6ff444bf992b3db444caa,
     type: 3}
   contentParent: {fileID: 5359622439765708240}
   title: {fileID: 8806611815195790817}
+--- !u!114 &1498942314737555842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108997401350935501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  <PredictedSpawn>k__BackingField: {fileID: 0}
+  _networkBehaviours: []
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
+  SerializedTransformProperties:
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 0
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 0
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 5039681316918598214
+  _sceneNetworkObjects: []
 --- !u!1 &1678783936596880412
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +180,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 276154363800985465}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -220,7 +255,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1605409960419539804}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -297,7 +331,6 @@ RectTransform:
   - {fileID: 7881028639452407489}
   - {fileID: 1605409960419539804}
   m_Father: {fileID: 2910246757328709860}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -349,7 +382,6 @@ RectTransform:
   m_Children:
   - {fileID: 276154363800985465}
   m_Father: {fileID: 5597997723677973390}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -451,7 +483,6 @@ RectTransform:
   - {fileID: 8806611815195790814}
   - {fileID: 5359622439765708240}
   m_Father: {fileID: 276154363800985465}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -579,7 +610,7 @@ PrefabInstance:
     - target: {fileID: 3857353560415471267, guid: 3bbb0a3918cdadc4489b2d8a527343fa,
         type: 3}
       propertyPath: m_text
-      value: <color=yellow><b>Lobby</b></color> [3/10]
+      value: <color=yellow><b>Lobby</b></color> [N/A]
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -46,7 +46,7 @@ namespace DefaultNamespace
             _visibility.Hide();
 
             if (ushort.TryParse(_port, out ushort port))
-                Services.GameplaySystem.ConnectToGame(_address, port);
+                Services.GameplayRunner.ConnectToGame(_address, port);
         }
     }
 }
