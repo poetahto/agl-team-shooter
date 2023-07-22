@@ -10,52 +10,24 @@ public interface IGameplayServices
 
 public interface ILobby
 {
-    void AddClient(IClient client);
-    void RemoveClient(IClient client);
-    IReadOnlyReactiveCollection<IClient> Clients { get; }
-}
-
-public class Lobby : ILobby
-{
-    private ReactiveCollection<IClient> _clients = new ReactiveCollection<IClient>();
-    public IReadOnlyReactiveCollection<IClient> Clients => _clients;
-
-    public void AddClient(IClient client)
-    {
-        _clients.Add(client);
-    }
-
-    public void RemoveClient(IClient client)
-    {
-        _clients.Add(client);
-    }
+    void AddClient(Client client);
+    void RemoveClient(Client client);
+    IReadOnlyReactiveCollection<Client> Clients { get; }
 }
 
 public interface IGame
 {
 }
 
-public interface IClient
+public class Client
 {
-    string Username { get; }
-    int Id { get; }
-}
-
-public class Client : IClient
-{
-    public Client(string username, int id)
-    {
-        Username = username;
-        Id = id;
-    }
-
-    public string Username { get; }
-    public int Id { get; }
+    public string Username;
+    public int Id;
 }
 
 public class GameplayServices : MonoBehaviour, IGameplayServices
 {
     public INetworkInterface NetworkInterface { get; } = new FishNetNetworkInterface();
-    public ILobby Lobby { get; } = new Lobby();
+    public ILobby Lobby { get; set; }
     public IGame Game { get; } = new PayloadGame();
 }

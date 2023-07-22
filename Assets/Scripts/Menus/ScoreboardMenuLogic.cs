@@ -23,7 +23,7 @@ namespace DefaultNamespace
         private ILobby _lobby;
         private IVisibilityTransition _visibility;
         private bool _shown;
-        private Dictionary<IClient, ScoreboardNameView> _viewLookup = new Dictionary<IClient, ScoreboardNameView>();
+        private Dictionary<Client, ScoreboardNameView> _viewLookup = new Dictionary<Client, ScoreboardNameView>();
 
         private void Start()
         {
@@ -36,8 +36,8 @@ namespace DefaultNamespace
                 _lobby.Clients.ObserveAdd().Subscribe(addData => AddClientView(addData.Value));
                 _lobby.Clients.ObserveRemove().Subscribe(removeData => RemoveClientView(removeData.Value));
 
-                foreach (var client in _lobby.Clients)
-                    AddClientView(client);
+                // foreach (var client in _lobby.Clients)
+                //     AddClientView(client);
             }
         }
 
@@ -46,14 +46,14 @@ namespace DefaultNamespace
             title.text = $"{"Lobby".Bold().Yellow()} [{count} Connected]";
         }
 
-        private void AddClientView(IClient client)
+        private void AddClientView(Client client)
         {
             var instance = Instantiate(nameViewPrefab, contentParent);
-            instance.nameText.text = client.Username;
+            instance.nameText.text = $"{client.Username} [ID={client.Id}]";
             _viewLookup.Add(client, instance);
         }
 
-        private void RemoveClientView(IClient client)
+        private void RemoveClientView(Client client)
         {
             var instance = _viewLookup[client];
             _viewLookup.Remove(client);

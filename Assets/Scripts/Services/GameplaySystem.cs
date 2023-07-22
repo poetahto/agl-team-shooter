@@ -19,7 +19,7 @@ public class GameplaySystem : MonoBehaviour, IGameplaySystem
     private bool _isRunning;
     private IGameplayServices _services;
     private GameplayServices _serviceInstance;
-    private IClient _activeClient;
+    private Client _activeClient;
 
     private void Awake()
     {
@@ -42,6 +42,7 @@ public class GameplaySystem : MonoBehaviour, IGameplaySystem
     {
         InitializeServices();
         _activeClient = await _services.NetworkInterface.Host(port);
+        _services.NetworkInterface.Spawn(_serviceInstance.GetComponentInChildren<Lobby>(true).gameObject);
         _services.Lobby.AddClient(_activeClient);
         print($"hosted game with client {_activeClient.Id}");
         await _services.NetworkInterface.LoadScene("TestingMap");
