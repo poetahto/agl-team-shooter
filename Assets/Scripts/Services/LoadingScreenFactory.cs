@@ -5,13 +5,7 @@ using ElRaccoone.Tweens;
 using Poetools.UI.Items;
 using UnityEngine;
 
-public interface ILoadingScreenFactory
-{
-    UniTask<IDisposable> FadeColor(Color color, float duration = 0.5f);
-    UniTask<IDisposable> SlideRightColor(Color color, float duration = 0.5f);
-}
-
-public class LoadingScreenFactory : MonoBehaviour, ILoadingScreenFactory
+public class LoadingScreenFactory : MonoBehaviour
 {
     [SerializeField]
     private ColorScreenView colorScreenPrefab;
@@ -36,8 +30,20 @@ public class LoadingScreenFactory : MonoBehaviour, ILoadingScreenFactory
         ColorScreenView instance = Instantiate(colorScreenPrefab, transform);
         instance.image.color = color;
         instance.rectTransform.pivot = new Vector2(1, 0.5f);
-        instance.rectTransform.TweenPositionX(Screen.width, duration).SetFrom(0).SetEaseQuadOut();
+
+        instance.rectTransform
+            .TweenPositionX(Screen.width, duration)
+            .SetFrom(0)
+            .SetEaseQuadOut();
+
         await UniTask.Delay(TimeSpan.FromSeconds(duration));
-        return new DisposableAction(() => instance.rectTransform.TweenPositionX(Screen.width * 2, duration).SetEaseQuadIn());
+
+        return new DisposableAction(() =>
+        {
+            instance.rectTransform
+                .TweenPositionX(Screen.width * 2, duration)
+                .SetEaseQuadIn()
+                .SetOnComplete(() => Destroy(instance.gameObject));
+        });
     }
 }

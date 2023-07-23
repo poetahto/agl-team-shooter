@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Core;
 using FishNet.Object;
 using TMPro;
@@ -22,7 +21,9 @@ namespace DefaultNamespace
         [SerializeField]
         private TMP_Text title;
 
-        private Lobby _lobby;
+        [SerializeField]
+        private Lobby lobby;
+
         private IVisibilityTransition _visibility;
         private bool _shown;
         private Dictionary<ClientData, ScoreboardNameView> _viewLookup = new Dictionary<ClientData, ScoreboardNameView>();
@@ -36,15 +37,14 @@ namespace DefaultNamespace
         {
             base.OnStartNetwork();
             print("init scoreboard");
-            _lobby = Services.GameplayRunner.Systems.lobby;
-            _lobby.Clients.ObserveCountChanged(true).Subscribe(HandleCountChanged);
-            _lobby.Clients.ObserveAdd().Subscribe(addData => AddClientView(addData.Value));
-            _lobby.Clients.ObserveRemove().Subscribe(removeData => RemoveClientView(removeData.Value));
+            lobby.Clients.ObserveCountChanged(true).Subscribe(HandleCountChanged);
+            lobby.Clients.ObserveAdd().Subscribe(addData => AddClientView(addData.Value));
+            lobby.Clients.ObserveRemove().Subscribe(removeData => RemoveClientView(removeData.Value));
 
-            foreach (var client in _lobby.Clients)
+            foreach (var client in lobby.Clients)
                 AddClientView(client);
 
-            HandleCountChanged(_lobby.Clients.Count);
+            HandleCountChanged(lobby.Clients.Count);
         }
 
         private void HandleCountChanged(int count)

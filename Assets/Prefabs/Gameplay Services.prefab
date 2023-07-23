@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7343232594871575236}
-  - component: {fileID: 4849375853701713754}
   - component: {fileID: 6933721453805942604}
   m_Layer: 0
   m_Name: Gameplay Services
@@ -36,23 +35,6 @@ Transform:
   - {fileID: 8557380200948519931}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4849375853701713754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4781903055359775733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02324fd86ae34c6faad03f2effec8ba4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 6933721453805942604}
-  _networkObjectCache: {fileID: 6933721453805942604}
-  lobby: {fileID: 65338744701445819}
-  scoreboard: {fileID: 2482627258899429793}
 --- !u!114 &6933721453805942604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,12 +50,11 @@ MonoBehaviour:
   <IsNested>k__BackingField: 0
   <ComponentIndex>k__BackingField: 0
   <PredictedSpawn>k__BackingField: {fileID: 0}
-  _networkBehaviours:
-  - {fileID: 4849375853701713754}
+  _networkBehaviours: []
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField:
-  - {fileID: 3520271546201084148}
   - {fileID: 3950022299455099900}
+  - {fileID: 3520271546201084148}
   SerializedTransformProperties:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -150,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsNested>k__BackingField: 1
-  <ComponentIndex>k__BackingField: 2
+  <ComponentIndex>k__BackingField: 1
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 65338744701445819}
@@ -211,6 +192,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 460427162686992599, guid: ae11c8ccaab7cf4419c86ea165ea692d,
         type: 3}
+      propertyPath: lobby
+      value: 
+      objectReference: {fileID: 65338744701445819}
+    - target: {fileID: 460427162686992599, guid: ae11c8ccaab7cf4419c86ea165ea692d,
+        type: 3}
       propertyPath: _addedNetworkObject
       value: 
       objectReference: {fileID: 6933721453805942604}
@@ -218,11 +204,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Scoreboard
-      objectReference: {fileID: 0}
-    - target: {fileID: 1498942314737555842, guid: ae11c8ccaab7cf4419c86ea165ea692d,
-        type: 3}
-      propertyPath: _initializeOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1498942314737555842, guid: ae11c8ccaab7cf4419c86ea165ea692d,
         type: 3}
@@ -319,18 +300,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae11c8ccaab7cf4419c86ea165ea692d, type: 3}
---- !u!114 &2482627258899429793 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 460427162686992599, guid: ae11c8ccaab7cf4419c86ea165ea692d,
-    type: 3}
-  m_PrefabInstance: {fileID: 2600780706950990198}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62482a6fa46b4677bd4559ee45fff4f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3520271546201084148 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1498942314737555842, guid: ae11c8ccaab7cf4419c86ea165ea692d,

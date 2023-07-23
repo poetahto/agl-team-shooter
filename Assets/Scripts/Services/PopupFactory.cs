@@ -3,14 +3,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-public interface IPopupFactory
-{
-    void ShowSettings(Action onClose = null);
-    void PromptHostGame(Action onClose = null);
-    void PromptConnectGame(Action onClose = null);
-}
-
-public class PopupFactory : MonoBehaviour, IPopupFactory
+public class PopupFactory : MonoBehaviour
 {
     [SerializeField]
     private GameObject settingsPrefab;

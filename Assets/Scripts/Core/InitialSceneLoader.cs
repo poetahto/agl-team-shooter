@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using FishNet.Utility;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace DefaultNamespace
 {
@@ -15,7 +14,7 @@ namespace DefaultNamespace
         {
             yield return null;
 #if !UNITY_EDITOR
-            SceneManager.LoadScene(firstScene);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(firstScene);
 #endif
         }
     }

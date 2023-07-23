@@ -8,7 +8,7 @@ public class MainMenuLogic : MonoBehaviour
 {
     private void Start()
     {
-        IPopupFactory popups = Services.PopupFactory;
+        PopupFactory popups = Services.PopupFactory;
 
         new ExistingMenuBuilder()
             .Register("host", new Button(() => popups.PromptHostGame()))

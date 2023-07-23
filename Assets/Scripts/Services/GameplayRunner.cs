@@ -1,44 +1,48 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using FishNet;
+using FishNet.Object;
 using UnityEngine;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class GameplayRunner : MonoBehaviour
 {
     [SerializeField]
-    private GameplaySystems gameplaySystemsPrefab;
+    private NetworkObject gameplaySystemsPrefab;
 
     private bool _isRunning;
     private FishNetWrapper _network;
-
-    public GameplaySystems Systems { get; set; }
+    private FishNetSceneLoader _sceneLoader;
 
     private void Awake()
     {
         Services.GameplayRunner = this;
         _network = new FishNetWrapper();
+        _sceneLoader = new FishNetSceneLoader();
     }
 
     public async UniTask HostGame(ushort port)
     {
+        using var _ = await Services.LoadingScreenFactory.SlideRightColor(Color.black);
         await _network.StartHost(port);
         InitializeServices();
-        await _network.LoadScene("TestingMap");
+
+        // todo: maybe a map selection screen instead of straight into map?
+        await _sceneLoader.Server_LoadScene("TestingMap");
     }
 
     public async UniTask ConnectToGame(string address, ushort port)
     {
+        using var _ = await Services.LoadingScreenFactory.SlideRightColor(Color.black);
         await _network.StartClient(address, port);
     }
 
     public async UniTask StopGame()
     {
         _isRunning = false;
+        using var _ = await Services.LoadingScreenFactory.SlideRightColor(Color.black);
         await _network.Stop();
-        var loadingScreen = await Services.LoadingScreenFactory.SlideRightColor(Color.black);
         await SceneManager.LoadSceneAsync("MainMenu");
-        loadingScreen.Dispose();
     }
 
     private void InitializeServices()
