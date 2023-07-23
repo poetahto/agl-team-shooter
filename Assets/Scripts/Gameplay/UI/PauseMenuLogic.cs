@@ -1,11 +1,14 @@
-﻿using Core;
+﻿using System;
+using Core;
+using Core.Networking;
 using Cysharp.Threading.Tasks;
+using Gameplay;
 using Poetools.UI.Builders;
 using Poetools.UI.Items;
 using UniRx;
 using UnityEngine;
 
-public class PauseMenuLogic : MonoBehaviour
+public class PauseMenuLogic : GameplayBehavior
 {
     [SerializeField]
     private CanvasGroup canvasGroup;
@@ -16,6 +19,12 @@ public class PauseMenuLogic : MonoBehaviour
     private void Awake()
     {
         _visibility = CommonTransitions.Fade(canvasGroup);
+        _visibility.VisibilityChanged += HandleVisibilityChanged;
+    }
+
+    private void OnDestroy()
+    {
+        _visibility.VisibilityChanged -= HandleVisibilityChanged;
     }
 
     private void Start()
@@ -32,6 +41,15 @@ public class PauseMenuLogic : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !_settingsShown)
             _visibility.Toggle();
+    }
+
+    private void HandleVisibilityChanged(bool isVisible)
+    {
+        if (LocalConnection.FirstObject != null)
+        {
+            GameObject controllers = LocalConnection.FirstObject.GetComponentInChildren<OwnerOnly>(true).gameObject;
+            controllers.SetActive(!isVisible);
+        }
     }
 
     private void HandleShowSettings()

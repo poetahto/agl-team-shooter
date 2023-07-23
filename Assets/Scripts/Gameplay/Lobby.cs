@@ -35,7 +35,7 @@ public class Lobby : NetworkBehaviour
 
         if (IsHost)
         {
-            Server_AddClient(ClientManager.Connection, new PlayerData{Username = "Host"});
+            Server_AddClient(LocalConnection, new PlayerData{Username = "Host", Id = LocalConnection.ClientId});
         }
     }
 
@@ -51,7 +51,7 @@ public class Lobby : NetworkBehaviour
         switch (args.ConnectionState)
         {
             case RemoteConnectionState.Started:
-                Server_AddClient(connection, new PlayerData{Username = $"Player {args.ConnectionId}"});
+                Server_AddClient(connection, new PlayerData{Username = $"Player {connection.ClientId}", Id = connection.ClientId});
                 break;
             case RemoteConnectionState.Stopped:
                 Server_RemoveClient(connection);

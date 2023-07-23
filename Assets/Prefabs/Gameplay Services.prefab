@@ -213,7 +213,7 @@ PrefabInstance:
     - target: {fileID: 1498942314737555842, guid: ae11c8ccaab7cf4419c86ea165ea692d,
         type: 3}
       propertyPath: <ComponentIndex>k__BackingField
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1498942314737555842, guid: ae11c8ccaab7cf4419c86ea165ea692d,
         type: 3}
