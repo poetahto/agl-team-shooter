@@ -1,5 +1,4 @@
-﻿using System;
-using Core;
+﻿using Core;
 using Core.Networking;
 using Cysharp.Threading.Tasks;
 using Gameplay;
@@ -47,6 +46,7 @@ public class PauseMenuLogic : GameplayBehavior
     {
         if (LocalConnection.FirstObject != null)
         {
+            // todo: this sucks
             GameObject controllers = LocalConnection.FirstObject.GetComponentInChildren<OwnerOnly>(true).gameObject;
             controllers.SetActive(!isVisible);
         }

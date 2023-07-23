@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Core;
+﻿using Core;
 using Cysharp.Threading.Tasks;
 using Poetools.UI.Builders;
 using Poetools.UI.Items;
@@ -46,7 +45,7 @@ namespace DefaultNamespace
             _visibility.Hide();
 
             if (ushort.TryParse(_port, out ushort port))
-                Services.GameplayRunner.ConnectToGame(_address, port);
+                Services.GameplayRunner.ConnectToGame(_address, port).Forget();
         }
     }
 }

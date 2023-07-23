@@ -12,13 +12,13 @@ public class GameplayRunner : MonoBehaviour
 
     private bool _isRunning;
     private FishNetWrapper _network;
-    private FishNetSceneLoader _sceneLoader;
+    public FishNetSceneLoader SceneLoader;
 
     private void Awake()
     {
         Services.GameplayRunner = this;
         _network = new FishNetWrapper();
-        _sceneLoader = new FishNetSceneLoader();
+        SceneLoader = new FishNetSceneLoader();
     }
 
     public async UniTask HostGame(ushort port)
@@ -26,9 +26,7 @@ public class GameplayRunner : MonoBehaviour
         using var _ = await Services.LoadingScreenFactory.SlideRightColor(Color.black);
         await _network.StartHost(port);
         InitializeServices();
-
-        // todo: maybe a map selection screen instead of straight into map?
-        await _sceneLoader.Server_LoadScene("TestingMap");
+        await SceneLoader.Server_LoadScene("GameSetup");
     }
 
     public async UniTask ConnectToGame(string address, ushort port)

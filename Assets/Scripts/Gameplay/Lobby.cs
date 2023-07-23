@@ -28,6 +28,19 @@ public class Lobby : NetworkBehaviour
         _connectionsToClients = new Dictionary<NetworkConnection, PlayerData>();
     }
 
+    public PlayerData FindPlayer(NetworkConnection connection)
+    {
+        foreach (var player in Players)
+        {
+            if (player.Id == connection.ClientId)
+            {
+                return player;
+            }
+        }
+
+        return null;
+    }
+
     public override void OnStartServer()
     {
         base.OnStartServer();
