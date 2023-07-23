@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using FishNet.Object.Synchronizing;
 using UniRx;
-using UniRx.Diagnostics;
 
 public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
 {
@@ -15,22 +14,22 @@ public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
     }
 
     public IObservable<CollectionAddEvent<T>> ObserveAdd() =>
-        _collection.ObserveAdd().Debug();
+        _collection.ObserveAdd();
 
     public IObservable<int> ObserveCountChanged(bool notifyCurrentCount = false) =>
-        _collection.ObserveCountChanged().Debug();
+        _collection.ObserveCountChanged();
 
     public IObservable<CollectionMoveEvent<T>> ObserveMove() =>
-        _collection.ObserveMove().Debug();
+        _collection.ObserveMove();
 
     public IObservable<CollectionRemoveEvent<T>> ObserveRemove() =>
-        _collection.ObserveRemove().Debug();
+        _collection.ObserveRemove();
 
     public IObservable<CollectionReplaceEvent<T>> ObserveReplace() =>
-        _collection.ObserveReplace().Debug();
+        _collection.ObserveReplace();
 
     public IObservable<Unit> ObserveReset() =>
-        _collection.ObserveReset().Debug();
+        _collection.ObserveReset();
 
     public void Move(int oldIndex, int newIndex) =>
         _collection.Move(oldIndex, newIndex);

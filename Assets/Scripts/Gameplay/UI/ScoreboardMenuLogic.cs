@@ -26,7 +26,7 @@ namespace DefaultNamespace
 
         private IVisibilityTransition _visibility;
         private bool _shown;
-        private Dictionary<ClientData, ScoreboardNameView> _viewLookup = new Dictionary<ClientData, ScoreboardNameView>();
+        private Dictionary<PlayerData, ScoreboardNameView> _viewLookup = new Dictionary<PlayerData, ScoreboardNameView>();
 
         private void Start()
         {
@@ -36,15 +36,14 @@ namespace DefaultNamespace
         public override void OnStartNetwork()
         {
             base.OnStartNetwork();
-            print("init scoreboard");
-            lobby.Clients.ObserveCountChanged(true).Subscribe(HandleCountChanged);
-            lobby.Clients.ObserveAdd().Subscribe(addData => AddClientView(addData.Value));
-            lobby.Clients.ObserveRemove().Subscribe(removeData => RemoveClientView(removeData.Value));
+            lobby.Players.ObserveCountChanged(true).Subscribe(HandleCountChanged);
+            lobby.Players.ObserveAdd().Subscribe(addData => AddClientView(addData.Value));
+            lobby.Players.ObserveRemove().Subscribe(removeData => RemoveClientView(removeData.Value));
 
-            foreach (var client in lobby.Clients)
+            foreach (var client in lobby.Players)
                 AddClientView(client);
 
-            HandleCountChanged(lobby.Clients.Count);
+            HandleCountChanged(lobby.Players.Count);
         }
 
         private void HandleCountChanged(int count)
@@ -52,17 +51,17 @@ namespace DefaultNamespace
             title.text = $"{"Lobby".Bold().Yellow()} [{count} Connected]";
         }
 
-        private void AddClientView(ClientData client)
+        private void AddClientView(PlayerData player)
         {
             var instance = Instantiate(nameViewPrefab, contentParent);
-            instance.nameText.text = $"{client.Username}";
-            _viewLookup.Add(client, instance);
+            instance.nameText.text = $"{player.Username}";
+            _viewLookup.Add(player, instance);
         }
 
-        private void RemoveClientView(ClientData client)
+        private void RemoveClientView(PlayerData player)
         {
-            ScoreboardNameView instance = _viewLookup[client];
-            _viewLookup.Remove(client);
+            ScoreboardNameView instance = _viewLookup[player];
+            _viewLookup.Remove(player);
             Destroy(instance.gameObject);
         }
 

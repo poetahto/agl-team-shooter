@@ -1,49 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
-using FishNet;
 using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
 
-public class ClientData
-{
-    public string Username;
-}
-
+/// <summary>
+/// Associates connections with players in the game.
+/// </summary>
 public class Lobby : NetworkBehaviour
 {
-    // The list that is actually synchronized between client/server
+    /// <summary>
+    /// All of the players that are currently connected in this server.
+    /// This list is accurate and synced across all clients, and the server.
+    /// </summary>
+    public SyncReactiveList<PlayerData> Players { get; private set; }
+
+    // The internal list that actually synchronizes the data.
     [SyncObject]
-    private readonly SyncList<ClientData> _clients = new SyncList<ClientData>();
+    private readonly SyncList<PlayerData> _clients = new SyncList<PlayerData>();
 
-    private Dictionary<NetworkConnection, ClientData> _connectionsToClients
-        = new Dictionary<NetworkConnection, ClientData>();
+    private Dictionary<NetworkConnection, PlayerData> _connectionsToClients;
 
-    public SyncReactiveList<ClientData> Clients { get; private set; }
-
-    public override void OnStartNetwork()
+    private void Awake()
     {
-        base.OnStartNetwork();
-        print("init lobby");
-        Clients = new SyncReactiveList<ClientData>(_clients);
+        Players = new SyncReactiveList<PlayerData>(_clients);
+        _connectionsToClients = new Dictionary<NetworkConnection, PlayerData>();
+    }
 
-        if (IsServer)
-        {
-            ServerManager.OnRemoteConnectionState += Server_HandleRemoteConnectionState;
-        }
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        ServerManager.OnRemoteConnectionState += Server_HandleRemoteConnectionState;
 
         if (IsHost)
         {
-            Server_AddClient(ClientManager.Connection, new ClientData{Username = "Host"});
+            Server_AddClient(ClientManager.Connection, new PlayerData{Username = "Host"});
+        }
+    }
+
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+        ServerManager.OnRemoteConnectionState -= Server_HandleRemoteConnectionState;
+    }
+
+    [Server]
+    private void Server_HandleRemoteConnectionState(NetworkConnection connection, RemoteConnectionStateArgs args)
+    {
+        switch (args.ConnectionState)
+        {
+            case RemoteConnectionState.Started:
+                Server_AddClient(connection, new PlayerData{Username = $"Player {args.ConnectionId}"});
+                break;
+            case RemoteConnectionState.Stopped:
+                Server_RemoveClient(connection);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
     [Server]
-    private void Server_AddClient(NetworkConnection connection, ClientData client)
+    private void Server_AddClient(NetworkConnection connection, PlayerData player)
     {
-        _clients.Add(client);
-        _connectionsToClients.Add(connection, client);
+        _clients.Add(player);
+        _connectionsToClients.Add(connection, player);
     }
 
     [Server]
@@ -51,27 +73,5 @@ public class Lobby : NetworkBehaviour
     {
         _clients.Remove(_connectionsToClients[connection]);
         _connectionsToClients.Remove(connection);
-    }
-
-    [Server]
-    private void Server_HandleRemoteConnectionState(NetworkConnection connection, RemoteConnectionStateArgs args)
-    {
-        // Don't allow duplicate connections from the host.
-        if (connection == InstanceFinder.ClientManager.Connection)
-            return;
-
-        switch (args.ConnectionState)
-        {
-            case RemoteConnectionState.Started:
-                print("connected");
-                Server_AddClient(connection, new ClientData{Username = $"Player {args.ConnectionId}"});
-                break;
-            case RemoteConnectionState.Stopped:
-                print("left");
-                Server_RemoveClient(connection);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
     }
 }

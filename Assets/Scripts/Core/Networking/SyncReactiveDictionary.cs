@@ -5,11 +5,9 @@ using UniRx;
 public class SyncReactiveDictionary<TKey, TValue>
 {
     private readonly ReactiveDictionary<TKey, TValue> _reactiveDictionary = new ReactiveDictionary<TKey, TValue>();
-    private readonly bool _isHost;
 
-    public SyncReactiveDictionary(SyncIDictionary<TKey, TValue> dictionary, bool isHost)
+    public SyncReactiveDictionary(SyncIDictionary<TKey, TValue> dictionary)
     {
-        _isHost = isHost;
         dictionary.OnChange += HandleOnChange;
     }
 
@@ -30,8 +28,7 @@ public class SyncReactiveDictionary<TKey, TValue>
 
     private void HandleOnChange(SyncDictionaryOperation operation, TKey key, TValue value, bool asServer)
     {
-        // Prevent the host from accidentally handling doubled messages.
-        if (_isHost && asServer)
+        if (asServer)
             return;
 
         switch (operation)
