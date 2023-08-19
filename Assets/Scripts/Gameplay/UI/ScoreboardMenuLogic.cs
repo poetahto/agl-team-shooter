@@ -39,11 +39,6 @@ namespace DefaultNamespace
             lobby.Players.ObserveCountChanged(true).Subscribe(HandleCountChanged);
             lobby.Players.ObserveAdd().Subscribe(addData => AddClientView(addData.Value));
             lobby.Players.ObserveRemove().Subscribe(removeData => RemoveClientView(removeData.Value));
-
-            foreach (var client in lobby.Players)
-                AddClientView(client);
-
-            HandleCountChanged(lobby.Players.Count);
         }
 
         private void HandleCountChanged(int count)

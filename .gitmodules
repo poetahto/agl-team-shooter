@@ -1,0 +1,9 @@
+[submodule "Assets/Plugins/pt-physics-util"]
+	path = Assets/Plugins/pt-physics-util
+	url = git@github.com:poetahto/pt-physics-util.git
+[submodule "Assets/Plugins/pt-player-3d"]
+	path = Assets/Plugins/pt-player-3d
+	url = git@github.com:poetahto/pt-player-3d.git
+[submodule "Assets/Plugins/pt-player-3d-netcode"]
+	path = Assets/Plugins/pt-player-3d-netcode
+	url = git@github.com:poetahto/pt-player-3d-netcode.git

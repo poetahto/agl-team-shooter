@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using FishNet;
 using FishNet.Object;
+using FishNet.Utility;
 using UnityEngine;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
@@ -9,6 +10,14 @@ public class GameplayRunner : MonoBehaviour
 {
     [SerializeField]
     private NetworkObject gameplaySystemsPrefab;
+
+    [Scene]
+    [SerializeField]
+    private string initialServerScene;
+
+    [Scene]
+    [SerializeField]
+    private string menuScene;
 
     private bool _isRunning;
     private FishNetWrapper _network;
@@ -26,7 +35,7 @@ public class GameplayRunner : MonoBehaviour
         using var _ = await Services.LoadingScreenFactory.SlideRightColor(Color.black);
         await _network.StartHost(port);
         InitializeServices();
-        await SceneLoader.Server_LoadScene("GameSetup");
+        await SceneLoader.Server_LoadScene(initialServerScene);
     }
 
     public async UniTask ConnectToGame(string address, ushort port)
@@ -40,7 +49,7 @@ public class GameplayRunner : MonoBehaviour
         _isRunning = false;
         using var _ = await Services.LoadingScreenFactory.SlideRightColor(Color.black);
         await _network.Stop();
-        await SceneManager.LoadSceneAsync("MainMenu");
+        await SceneManager.LoadSceneAsync(menuScene);
     }
 
     private void InitializeServices()

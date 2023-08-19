@@ -7,9 +7,11 @@ using UniRx;
 public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
 {
     private readonly ReactiveCollection<T> _collection = new ReactiveCollection<T>();
+    private readonly SyncList<T> _syncList;
 
     public SyncReactiveList(SyncList<T> list)
     {
+        _syncList = list;
         list.OnChange += HandleOnChange;
     }
 
@@ -17,7 +19,7 @@ public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
         _collection.ObserveAdd();
 
     public IObservable<int> ObserveCountChanged(bool notifyCurrentCount = false) =>
-        _collection.ObserveCountChanged();
+        _collection.ObserveCountChanged(notifyCurrentCount);
 
     public IObservable<CollectionMoveEvent<T>> ObserveMove() =>
         _collection.ObserveMove();
@@ -30,9 +32,6 @@ public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
 
     public IObservable<Unit> ObserveReset() =>
         _collection.ObserveReset();
-
-    public void Move(int oldIndex, int newIndex) =>
-        _collection.Move(oldIndex, newIndex);
 
     private void HandleOnChange(SyncListOperation op, int index, T oldItem, T newItem, bool asServer)
     {
@@ -66,7 +65,7 @@ public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
 
     public IEnumerator<T> GetEnumerator()
     {
-        return _collection.GetEnumerator();
+        return _syncList.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -76,29 +75,29 @@ public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
 
     public void Add(T item)
     {
-        _collection.Add(item);
+        _syncList.Add(item);
     }
 
     public void Clear()
     {
-        _collection.Clear();
+        _syncList.Clear();
     }
 
     public bool Contains(T item)
     {
-        return _collection.Contains(item);
+        return _syncList.Contains(item);
     }
 
     public void CopyTo(T[] array, int arrayIndex)
     {
-        _collection.CopyTo(array, arrayIndex);
+        _syncList.CopyTo(array, arrayIndex);
     }
 
     public bool Remove(T item)
     {
-        return _collection.Remove(item);
+        return _syncList.Remove(item);
     }
 
-    public int Count => _collection.Count;
-    public bool IsReadOnly => false;
+    public int Count => _syncList.Count;
+    public bool IsReadOnly => _syncList.IsReadOnly;
 }
