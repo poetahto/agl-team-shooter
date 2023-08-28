@@ -1,5 +1,7 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UniRx;
+using UniRx.Diagnostics;
 using UnityEngine;
 
 namespace Gameplay
@@ -12,24 +14,27 @@ namespace Gameplay
         [SerializeField]
         private Gradient healthColorGradient;
 
-        private CompositeDisposable _bindings = new CompositeDisposable();
+        private IDisposable _bindings;
 
         public override void BindTo(LivingEntity instance)
         {
-            _bindings.Add(instance.ObserveHealthChange().Subscribe(eventData => UpdateHealthView(eventData.Entity)).AddTo(this));
-            _bindings.Add(instance.ObserveMaxHealthChange().Subscribe(eventData => UpdateHealthView(eventData.Entity)).AddTo(this));
+            healthText.enabled = true;
+
+            var healthChange = instance.ObserveHealthChange().Subscribe(eventData => UpdateHealthView(eventData.Entity));
+            var maxHealthChange = instance.ObserveMaxHealthChange().Subscribe(eventData => UpdateHealthView(eventData.Entity));
+            _bindings = StableCompositeDisposable.Create(healthChange, maxHealthChange);
         }
 
         private void UpdateHealthView(LivingEntity entity)
         {
-            healthText.text = entity.CurrentHealth.ToString();
+            healthText.text = entity.syncedCurrentHealth.ToString();
             healthText.color = healthColorGradient.Evaluate(entity.PercentHealth);
         }
 
         public override void ClearBindings()
         {
+            healthText.enabled = false;
             _bindings?.Dispose();
-            _bindings?.Clear();
         }
     }
 }

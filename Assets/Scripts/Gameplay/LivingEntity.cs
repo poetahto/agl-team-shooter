@@ -12,10 +12,10 @@ namespace Gameplay
         private int maxHealth = 100;
 
         [SyncVar(OnChange = nameof(HandleMaxHealthChange))]
-        private int _syncedMaxHealth;
+        public int syncedMaxHealth;
 
         [SyncVar(OnChange = nameof(HandleHealthChange))]
-        private int _syncedCurrentHealth;
+        public int syncedCurrentHealth;
 
         private Subject<HealthChangeEvent> _onHealthChange;
         private Subject<MaxHealthChangeEvent> _onMaxHealthChange;
@@ -23,9 +23,7 @@ namespace Gameplay
         public IObservable<HealthChangeEvent> ObserveHealthChange() => _onHealthChange;
         public IObservable<MaxHealthChangeEvent> ObserveMaxHealthChange() => _onMaxHealthChange;
 
-        public int MaxHealth => _syncedMaxHealth;
-        public int CurrentHealth => _syncedCurrentHealth;
-        public float PercentHealth => (float) CurrentHealth / MaxHealth;
+        public float PercentHealth => (float) syncedCurrentHealth / syncedMaxHealth;
 
         private void Awake()
         {
@@ -36,14 +34,14 @@ namespace Gameplay
         public override void OnStartServer()
         {
             base.OnStartServer();
-            _syncedMaxHealth = maxHealth;
-            _syncedCurrentHealth = maxHealth;
+            syncedMaxHealth = maxHealth;
+            syncedCurrentHealth = maxHealth;
         }
 
         [Server]
         public void ServerDamage(int amount)
         {
-            _syncedCurrentHealth -= amount;
+            syncedCurrentHealth -= amount;
         }
 
         private void HandleHealthChange(int previous, int next, bool asServer)

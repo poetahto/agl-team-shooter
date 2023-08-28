@@ -1,42 +1,22 @@
 ﻿using System;
-using FishNet;
-using FishNet.Object;
-using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Gameplay
 {
-    public class AliveState : ClientGameLogicState
+    [Serializable]
+    public class AliveState : PlayerGameLogicState
     {
-        private readonly Settings _settings;
+        public AlivePlayerUIView alivePlayerUI;
 
-        public AliveState(ClientGameLogic parent, Settings settings) : base(parent)
+        public override void OnEnter(bool asServer)
         {
-            _settings = settings;
+            if (Parent.Owner.IsLocalClient)
+                alivePlayerUI.BindTo(Parent.NetworkObject);
         }
 
-        public override void OnEnter()
+        public override void OnExit(bool asServer)
         {
-            base.OnEnter();
-            NetworkObject playerInstance = InstanceFinder.ClientManager.Connection.FirstObject;
-
-            if (playerInstance != null)
-            {
-                _settings.alivePlayerUI.BindTo(playerInstance);
-            }
-            else Debug.LogError("Client has no body object!");
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-            _settings.alivePlayerUI.ClearBindings();
-        }
-
-        [Serializable]
-        public class Settings
-        {
-            [FormerlySerializedAs("ui")] public AlivePlayerUIView alivePlayerUI;
+            if (Parent.Owner.IsLocalClient)
+                alivePlayerUI.ClearBindings();
         }
     }
 }
