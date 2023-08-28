@@ -1,4 +1,5 @@
 ﻿using System;
+using FishNet;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UniRx;
@@ -46,23 +47,20 @@ public class ConnectedPlayer : NetworkBehaviour
         _onPlayerStateChanged = new Subject<PlayerState>();
     }
 
-    public void HandleNameChange(string previous, string current, bool asServer)
+    private void HandleNameChange(string previous, string current, bool asServer) => _onNameChanged.OnNext(current);
+    private void HandleLoadoutChange(Loadout previous, Loadout current, bool asServer) => _onLoadoutChanged.OnNext(current);
+    private void HandleTeamChange(int previous, int current, bool asServer) => _onTeamChanged.OnNext(current);
+    private void HandlePlayerStateChange(PlayerState previous, PlayerState current, bool asServer) => _onPlayerStateChanged.OnNext(current);
+
+    [ServerRpc]
+    public void Rpc_ServerChangeTeam(int newTeam)
     {
-        _onNameChanged.OnNext(current);
+        syncedTeamId = newTeam;
     }
 
-    public void HandleLoadoutChange(Loadout previous, Loadout current, bool asServer)
+    public static ConnectedPlayer GetLocalPlayer()
     {
-        _onLoadoutChanged.OnNext(current);
-    }
-
-    public void HandleTeamChange(int previous, int current, bool asServer)
-    {
-        _onTeamChanged.OnNext(current);
-    }
-
-    public void HandlePlayerStateChange(PlayerState previous, PlayerState current, bool asServer)
-    {
-        _onPlayerStateChanged.OnNext(current);
+        var lobby = FindAnyObjectByType<Lobby>();
+        return lobby.FindPlayer(InstanceFinder.ClientManager.Connection);
     }
 }

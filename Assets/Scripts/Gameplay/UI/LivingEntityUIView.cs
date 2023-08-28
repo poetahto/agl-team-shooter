@@ -1,7 +1,6 @@
 ﻿using System;
 using TMPro;
 using UniRx;
-using UniRx.Diagnostics;
 using UnityEngine;
 
 namespace Gameplay

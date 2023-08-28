@@ -40,7 +40,6 @@ public class Lobby : NetworkBehaviour
     [Server]
     public void ServerHandlePlayerJoin(NetworkConnection connection)
     {
-        // var player = new PlayerData { Username = $"Player {connection.ClientId}", Id = connection.ClientId };
         var playerInstance = Instantiate(playerPrefab);
         Spawn(playerInstance.NetworkObject, connection);
         _clients.Add(playerInstance);

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8537511962761090361}
-  - component: {fileID: 3390887509273227649}
+  - component: {fileID: 3252675723010321600}
   m_Layer: 5
-  m_Name: Scoreboard Name
+  m_Name: Connected Player List UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,14 +32,13 @@ RectTransform:
   - {fileID: 6861388455900816010}
   - {fileID: 3858248023266120944}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 34.5239}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3390887509273227649
+--- !u!114 &3252675723010321600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,10 +47,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1132988318758291578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3a7bb55ee645aeb6b3221b3901beeb, type: 3}
+  m_Script: {fileID: 11500000, guid: b7ad77f3e8c14a998f6c494680ea66cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 3858248023266120911}
+  clearOnAwake: 1
+  displayText: {fileID: 3858248023266120911}
 --- !u!1 &7538113841776394502
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 1117147482652338589}
   - component: {fileID: 6314133651804304037}
   m_Layer: 5
-  m_Name: background
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8537511962761090361}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -244,13 +243,24 @@ PrefabInstance:
     - target: {fileID: 3857353560415471261, guid: 3bbb0a3918cdadc4489b2d8a527343fa,
         type: 3}
       propertyPath: m_Name
-      value: text
+      value: Text
       objectReference: {fileID: 0}
     - target: {fileID: 3857353560415471267, guid: 3bbb0a3918cdadc4489b2d8a527343fa,
         type: 3}
       propertyPath: m_text
       value: poetahto
       objectReference: {fileID: 0}
+    - target: {fileID: 3857353560415471267, guid: 3bbb0a3918cdadc4489b2d8a527343fa,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 3857353560415471267, guid: 3bbb0a3918cdadc4489b2d8a527343fa,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

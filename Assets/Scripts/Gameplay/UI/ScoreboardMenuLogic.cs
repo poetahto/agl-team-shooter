@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core;
 using FishNet.Object;
+using Gameplay.UI;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace DefaultNamespace
         private CanvasGroup canvasGroup;
 
         [SerializeField]
-        private ScoreboardNameView nameViewPrefab;
+        private ConnectedPlayerListUIView playerListViewPrefab;
 
         [SerializeField]
         private Transform contentParent;
@@ -26,7 +27,9 @@ namespace DefaultNamespace
 
         private IVisibilityTransition _visibility;
         private bool _shown;
-        private Dictionary<ConnectedPlayer, ScoreboardNameView> _viewLookup = new Dictionary<ConnectedPlayer, ScoreboardNameView>();
+
+        private Dictionary<ConnectedPlayer, ConnectedPlayerListUIView> _viewLookup
+            = new Dictionary<ConnectedPlayer, ConnectedPlayerListUIView>();
 
         private void Start()
         {
@@ -48,17 +51,16 @@ namespace DefaultNamespace
 
         private void AddClientView(ConnectedPlayer player)
         {
-            var instance = Instantiate(nameViewPrefab, contentParent);
-
-            // todo: auto sync this w/ the state in-case it changes - use the MonoView pattern
-            instance.nameText.text = $"{player.syncedPlayerName} {player.syncedLoadout}, Team {player.syncedTeamId}";
+            var instance = Instantiate(playerListViewPrefab, contentParent);
+            instance.BindTo(player);
             _viewLookup.Add(player, instance);
         }
 
         private void RemoveClientView(ConnectedPlayer player)
         {
-            ScoreboardNameView instance = _viewLookup[player];
+            var instance = _viewLookup[player];
             _viewLookup.Remove(player);
+            instance.ClearBindings();
             Destroy(instance.gameObject);
         }
 

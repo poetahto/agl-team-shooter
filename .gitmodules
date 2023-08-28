@@ -7,3 +7,6 @@
 [submodule "Assets/Plugins/pt-player-3d-netcode"]
 	path = Assets/Plugins/pt-player-3d-netcode
 	url = git@github.com:poetahto/pt-player-3d-netcode.git
+[submodule "Assets/Plugins/pt-runtime-console"]
+	path = Assets/Plugins/pt-runtime-console
+	url = git@github.com:poetahto/pt-runtime-console.git
