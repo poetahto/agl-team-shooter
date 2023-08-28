@@ -1,6 +1,7 @@
 ﻿using Core;
 using Core.Networking;
 using Cysharp.Threading.Tasks;
+using FishNet.Object;
 using Gameplay;
 using Poetools.UI.Builders;
 using Poetools.UI.Items;
@@ -44,11 +45,13 @@ public class PauseMenuLogic : GameplayBehavior
 
     private void HandleVisibilityChanged(bool isVisible)
     {
-        if (LocalConnection.FirstObject != null)
+        // todo: this sucks
+        foreach (NetworkObject localObj in LocalConnection.Objects)
         {
-            // todo: this sucks
-            GameObject controllers = LocalConnection.FirstObject.GetComponentInChildren<OwnerOnly>(true).gameObject;
-            controllers.SetActive(!isVisible);
+            OwnerOnly controllers = localObj.GetComponentInChildren<OwnerOnly>(true);
+
+            if (controllers != null)
+                controllers.gameObject.SetActive(!isVisible);
         }
     }
 

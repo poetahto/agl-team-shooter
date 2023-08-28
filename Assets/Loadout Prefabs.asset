@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d888e4913afd45b39723f1e02cadd099, type: 3}
-  m_Name: New Standard Movement Strategy
+  m_Script: {fileID: 11500000, guid: 76aeba47b98e42aeb6fa55191bdd9e5d, type: 3}
+  m_Name: Loadout Prefabs
   m_EditorClassIdentifier: 
-  groundedAcceleration: 0.1
-  groundedDeceleration: 0.1
-  airborneAcceleration: 0.2
-  airborneDeceleration: 0.2
+  loadoutPrefabGenerator:
+    dictionary:
+    - key: 0
+      value: {fileID: 1073364796965487285, guid: 2dcadb0033472d44eb2970b79b445a57,
+        type: 3}

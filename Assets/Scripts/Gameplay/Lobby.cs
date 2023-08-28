@@ -1,90 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using FishNet.Connection;
+﻿using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using FishNet.Transporting;
+using UnityEngine;
 
 /// <summary>
 /// Associates connections with players in the game.
 /// </summary>
 public class Lobby : NetworkBehaviour
 {
+    [SerializeField]
+    private ConnectedPlayer playerPrefab;
+
     /// <summary>
     /// All of the players that are currently connected in this server.
     /// This list is accurate and synced across all clients, and the server.
     /// </summary>
-    public SyncReactiveList<PlayerData> Players { get; private set; }
+    public SyncReactiveList<ConnectedPlayer> Players { get; private set; }
 
     // The internal list that actually synchronizes the data.
     [SyncObject]
-    private readonly SyncList<PlayerData> _clients = new SyncList<PlayerData>();
-
-    private Dictionary<NetworkConnection, PlayerData> _connectionsToClients;
+    private readonly SyncList<ConnectedPlayer> _clients = new SyncList<ConnectedPlayer>();
 
     private void Awake()
     {
-        Players = new SyncReactiveList<PlayerData>(_clients);
-        _connectionsToClients = new Dictionary<NetworkConnection, PlayerData>();
+        Players = new SyncReactiveList<ConnectedPlayer>(_clients);
     }
 
-    public PlayerData FindPlayer(NetworkConnection connection)
+    public ConnectedPlayer FindPlayer(NetworkConnection connection)
     {
         foreach (var player in Players)
         {
-            if (player.Id == connection.ClientId)
-            {
+            if (player.Owner == connection)
                 return player;
-            }
         }
 
         return null;
     }
 
-    public override void OnStartServer()
+    [Server]
+    public void ServerHandlePlayerJoin(NetworkConnection connection)
     {
-        base.OnStartServer();
-        ServerManager.OnRemoteConnectionState += Server_HandleRemoteConnectionState;
-
-        if (IsHost)
-        {
-            Server_AddClient(LocalConnection, new PlayerData{Username = "Host", Id = LocalConnection.ClientId});
-        }
-    }
-
-    public override void OnStopServer()
-    {
-        base.OnStopServer();
-        ServerManager.OnRemoteConnectionState -= Server_HandleRemoteConnectionState;
+        // var player = new PlayerData { Username = $"Player {connection.ClientId}", Id = connection.ClientId };
+        var playerInstance = Instantiate(playerPrefab);
+        Spawn(playerInstance.NetworkObject, connection);
+        _clients.Add(playerInstance);
     }
 
     [Server]
-    private void Server_HandleRemoteConnectionState(NetworkConnection connection, RemoteConnectionStateArgs args)
+    public void ServerHandlePlayerLeave(NetworkConnection connection)
     {
-        switch (args.ConnectionState)
-        {
-            case RemoteConnectionState.Started:
-                Server_AddClient(connection, new PlayerData{Username = $"Player {connection.ClientId}", Id = connection.ClientId});
-                break;
-            case RemoteConnectionState.Stopped:
-                Server_RemoveClient(connection);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    [Server]
-    private void Server_AddClient(NetworkConnection connection, PlayerData player)
-    {
-        _clients.Add(player);
-        _connectionsToClients.Add(connection, player);
-    }
-
-    [Server]
-    private void Server_RemoveClient(NetworkConnection connection)
-    {
-        _clients.Remove(_connectionsToClients[connection]);
-        _connectionsToClients.Remove(connection);
+        var playerInstance = FindPlayer(connection);
+        _clients.Remove(playerInstance);
     }
 }

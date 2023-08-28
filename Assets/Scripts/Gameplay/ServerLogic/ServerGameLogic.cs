@@ -8,7 +8,7 @@ namespace Gameplay
     public class ServerGameLogic : NetworkBehaviour
     {
         [SerializeField]
-        private LoadoutSystem loadoutSystem;
+        private Lobby lobby;
 
         public override void OnStartServer()
         {
@@ -37,22 +37,15 @@ namespace Gameplay
         private void SpawnPlayerForConnection(NetworkConnection connection, bool asServer)
         {
             connection.OnLoadedStartScenes -= SpawnPlayerForConnection;
-            print($"{connection.ClientId} finished loading start scenes!");
-            loadoutSystem.ServerHandlePlayerJoin(connection);
-
-            NetworkObject loadoutPrefab = loadoutSystem.ServerGetLoadoutPrefab(connection);
-            NetworkObject playerInstance = Instantiate(loadoutPrefab);
-            Spawn(playerInstance, connection);
+            lobby.ServerHandlePlayerJoin(connection);
         }
 
         private void HandlePlayerLeave(NetworkConnection connection)
         {
-            loadoutSystem.ServerHandlePlayerLeave(connection);
+            lobby.ServerHandlePlayerLeave(connection);
 
-            foreach (var networkObject in connection.Objects)
-            {
+            foreach (var networkObject in connection.Objects) // todo: who's responsibility is it to clean these up?
                 Despawn(networkObject);
-            }
         }
     }
 }

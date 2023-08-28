@@ -26,7 +26,7 @@ namespace DefaultNamespace
 
         private IVisibilityTransition _visibility;
         private bool _shown;
-        private Dictionary<PlayerData, ScoreboardNameView> _viewLookup = new Dictionary<PlayerData, ScoreboardNameView>();
+        private Dictionary<ConnectedPlayer, ScoreboardNameView> _viewLookup = new Dictionary<ConnectedPlayer, ScoreboardNameView>();
 
         private void Start()
         {
@@ -46,14 +46,16 @@ namespace DefaultNamespace
             title.text = $"{"Lobby".Bold().Yellow()} [{count} Connected]";
         }
 
-        private void AddClientView(PlayerData player)
+        private void AddClientView(ConnectedPlayer player)
         {
             var instance = Instantiate(nameViewPrefab, contentParent);
-            instance.nameText.text = $"{player.Username}";
+
+            // todo: auto sync this w/ the state in-case it changes - use the MonoView pattern
+            instance.nameText.text = $"{player.syncedPlayerName} {player.syncedLoadout}, Team {player.syncedTeamId}";
             _viewLookup.Add(player, instance);
         }
 
-        private void RemoveClientView(PlayerData player)
+        private void RemoveClientView(ConnectedPlayer player)
         {
             ScoreboardNameView instance = _viewLookup[player];
             _viewLookup.Remove(player);
