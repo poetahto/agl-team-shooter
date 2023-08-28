@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 8728800715335581933}
   - component: {fileID: 6761998286469145302}
   - component: {fileID: 8830513945203439276}
+  - component: {fileID: 584011740179561703}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -327,7 +328,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
+  <PrefabId>k__BackingField: 3
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -529,6 +530,24 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &584011740179561703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2597112694839628463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae466ec99e145cf84afcbe00735ab84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 1073364796965487285}
+  _networkObjectCache: {fileID: 0}
+  maxHealth: 100
+  _syncedMaxHealth: 0
+  _syncedCurrentHealth: 0
 --- !u!1 &3262128611837068688
 GameObject:
   m_ObjectHideFlags: 0

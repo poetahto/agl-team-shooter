@@ -7,7 +7,8 @@ namespace Gameplay
 {
     public class ServerGameLogic : NetworkBehaviour
     {
-        [SerializeField] private NetworkObject playerPrefab;
+        [SerializeField]
+        private NetworkObject playerPrefab;
 
         public override void OnStartServer()
         {

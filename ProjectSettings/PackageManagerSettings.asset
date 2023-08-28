@@ -31,6 +31,7 @@ MonoBehaviour:
     m_Url: https://package.openupm.com
     m_Scopes:
     - com.cysharp.unitask
+    - com.inspiaaa.unityhfsm
     - com.neuecc.unirx
     - com.openupm
     - nl.elraccoone.tweens
@@ -42,6 +43,6 @@ MonoBehaviour:
   m_RegistryInfoDraft:
     m_Modified: 0
     m_ErrorMessage: 
-    m_UserModificationsInstanceId: -838
-    m_OriginalInstanceId: -840
+    m_UserModificationsInstanceId: -834
+    m_OriginalInstanceId: -838
   m_LoadAssets: 0
