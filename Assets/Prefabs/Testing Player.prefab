@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 6761998286469145302}
   - component: {fileID: 8830513945203439276}
   - component: {fileID: 584011740179561703}
-  - component: {fileID: 4151579593349812921}
+  - component: {fileID: 7126987939586424792}
   m_Layer: 0
   m_Name: Testing Player
   m_TagString: Untagged
@@ -453,7 +453,7 @@ MonoBehaviour:
   - {fileID: 5529965419066528771}
   - {fileID: 2892550635548047104}
   - {fileID: 584011740179561703}
-  - {fileID: 4151579593349812921}
+  - {fileID: 0}
   - {fileID: 7193525024737968589}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
@@ -686,7 +686,7 @@ MonoBehaviour:
   maxHealth: 100
   syncedMaxHealth: 0
   syncedCurrentHealth: 0
---- !u!114 &4151579593349812921
+--- !u!114 &7126987939586424792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -695,15 +695,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2597112694839628463}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a01239acb8e4224abad4bb625e1d4bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 769b945d46c644afa8e4df1aacb20039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 4
+  _componentIndexCache: 255
   _addedNetworkObject: {fileID: 1073364796965487285}
-  _networkObjectCache: {fileID: 1073364796965487285}
-  aliveState:
-    alivePlayerUI: {fileID: 6634790277854429925}
-  syncedState: 0
+  _networkObjectCache: {fileID: 0}
+  livingEntity: {fileID: 584011740179561703}
 --- !u!1 &3262128611837068688
 GameObject:
   m_ObjectHideFlags: 0

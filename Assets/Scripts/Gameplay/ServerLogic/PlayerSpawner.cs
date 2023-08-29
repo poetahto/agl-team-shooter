@@ -49,7 +49,7 @@ namespace Gameplay
 
         private void HandleBodyAdded(DictionaryAddEvent<ConnectedPlayer, NetworkObject> eventData)
         {
-            // Spawn(eventData.Value, eventData.Key.Owner);
+            Spawn(eventData.Value, eventData.Key.Owner);
         }
 
         private void HandleBodyRemoved(DictionaryRemoveEvent<ConnectedPlayer, NetworkObject> eventData)
@@ -80,9 +80,7 @@ namespace Gameplay
             if (_playersToBodies.ContainsKey(player))
                 _playersToBodies.Remove(player);
 
-            print($"spawned {bodyPrefab.name}");
             NetworkObject bodyInstance = Instantiate(bodyPrefab); // todo: spawn points based on team
-            Spawn(bodyInstance, player.Owner);
             _playersToBodies.Add(player, bodyInstance);
         }
     }

@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 6669663874541091640}
   - component: {fileID: 1073364796965487285}
   - component: {fileID: 400392587900873100}
+  - component: {fileID: 1251054688351138238}
   m_Layer: 0
   m_Name: Respawning Player
   m_TagString: Untagged
@@ -298,7 +299,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 2
+  <PrefabId>k__BackingField: 1
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -316,6 +317,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3efafc42f2b741da83d74f5954508f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1251054688351138238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2597112694839628463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2fdd123a4d44d7809dba0aa13af2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 1073364796965487285}
+  _networkObjectCache: {fileID: 0}
+  respawnTime: 5
 --- !u!1 &3262128611837068688
 GameObject:
   m_ObjectHideFlags: 0

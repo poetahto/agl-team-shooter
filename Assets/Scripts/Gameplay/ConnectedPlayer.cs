@@ -1,5 +1,6 @@
 ﻿using System;
 using FishNet;
+using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UniRx;
@@ -87,7 +88,12 @@ public class ConnectedPlayer : NetworkBehaviour
 
     public static ConnectedPlayer GetLocalPlayer()
     {
+        return GetPlayer(InstanceFinder.ClientManager.Connection);
+    }
+
+    public static ConnectedPlayer GetPlayer(NetworkConnection connection)
+    {
         var lobby = FindAnyObjectByType<Lobby>();
-        return lobby.FindPlayer(InstanceFinder.ClientManager.Connection);
+        return lobby.FindPlayer(connection);
     }
 }

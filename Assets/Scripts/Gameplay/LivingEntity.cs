@@ -19,9 +19,11 @@ namespace Gameplay
 
         private Subject<HealthChangeEvent> _onHealthChange;
         private Subject<MaxHealthChangeEvent> _onMaxHealthChange;
+        private Subject<DeathEvent> _onDeath;
 
-        public IObservable<HealthChangeEvent> ObserveHealthChange() => _onHealthChange;
-        public IObservable<MaxHealthChangeEvent> ObserveMaxHealthChange() => _onMaxHealthChange;
+        public IObservable<HealthChangeEvent> ObserveHealthChanged() => _onHealthChange;
+        public IObservable<MaxHealthChangeEvent> ObserveMaxHealthChanged() => _onMaxHealthChange;
+        public IObservable<DeathEvent> ObserveDeath() => _onDeath;
 
         public float PercentHealth => (float) syncedCurrentHealth / syncedMaxHealth;
 
@@ -29,6 +31,7 @@ namespace Gameplay
         {
             _onHealthChange = new Subject<HealthChangeEvent>();
             _onMaxHealthChange = new Subject<MaxHealthChangeEvent>();
+            _onDeath = new Subject<DeathEvent>();
         }
 
         public override void OnStartServer()
@@ -39,9 +42,29 @@ namespace Gameplay
         }
 
         [Server]
+        public void ServerKill()
+        {
+            ServerDamage(syncedCurrentHealth);
+        }
+
+        [Server]
         public void ServerDamage(int amount)
         {
-            syncedCurrentHealth -= amount;
+            int finalHealth = syncedCurrentHealth - amount;
+
+            if (finalHealth <= 0 && syncedCurrentHealth > 0)
+            {
+                _onDeath.OnNext(new DeathEvent{Entity = this});
+                Rpc_ObserverDeath();
+            }
+
+            syncedCurrentHealth = finalHealth;
+        }
+
+        [ObserversRpc(ExcludeServer = true)]
+        private void Rpc_ObserverDeath()
+        {
+            _onDeath.OnNext(new DeathEvent{Entity = this});
         }
 
         private void HandleHealthChange(int previous, int next, bool asServer)
@@ -90,6 +113,11 @@ namespace Gameplay
             public LivingEntity Entity;
             public int PreviousHealth;
             public int CurrentHealth;
+        }
+
+        public struct DeathEvent
+        {
+            public LivingEntity Entity;
         }
     }
 }
