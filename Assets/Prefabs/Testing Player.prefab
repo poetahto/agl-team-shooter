@@ -453,7 +453,7 @@ MonoBehaviour:
   - {fileID: 5529965419066528771}
   - {fileID: 2892550635548047104}
   - {fileID: 584011740179561703}
-  - {fileID: 0}
+  - {fileID: 7126987939586424792}
   - {fileID: 7193525024737968589}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
@@ -698,9 +698,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 769b945d46c644afa8e4df1aacb20039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 4
   _addedNetworkObject: {fileID: 1073364796965487285}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 1073364796965487285}
   livingEntity: {fileID: 584011740179561703}
 --- !u!1 &3262128611837068688
 GameObject:
@@ -808,7 +808,8 @@ MonoBehaviour:
   _componentIndexCache: 5
   _addedNetworkObject: {fileID: 1073364796965487285}
   _networkObjectCache: {fileID: 1073364796965487285}
-  gameObjectTargets: []
+  gameObjectTargets:
+  - {fileID: 5563805960930673845}
   behaviorTargets: []
 --- !u!1 &4903649727796277014
 GameObject:
@@ -1217,6 +1218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clearOnAwake: 1
+  autoBind: {fileID: 1073364796965487285}
   livingEntityUIView: {fileID: 7248516689812914570}
 --- !u!1 &8831604084238497569
 GameObject:
@@ -1268,6 +1270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clearOnAwake: 1
+  autoBind: {fileID: 0}
   healthText: {fileID: 5747092339767854167}
   healthColorGradient:
     serializedVersion: 2

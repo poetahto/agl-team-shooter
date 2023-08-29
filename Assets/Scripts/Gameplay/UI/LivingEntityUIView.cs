@@ -22,6 +22,8 @@ namespace Gameplay
             var healthChange = instance.ObserveHealthChanged().Subscribe(eventData => UpdateHealthView(eventData.Entity));
             var maxHealthChange = instance.ObserveMaxHealthChanged().Subscribe(eventData => UpdateHealthView(eventData.Entity));
             _bindings = StableCompositeDisposable.Create(healthChange, maxHealthChange);
+
+            UpdateHealthView(instance);
         }
 
         private void UpdateHealthView(LivingEntity entity)

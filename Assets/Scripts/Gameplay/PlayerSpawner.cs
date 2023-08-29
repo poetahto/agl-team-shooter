@@ -80,7 +80,8 @@ namespace Gameplay
             if (_playersToBodies.ContainsKey(player))
                 _playersToBodies.Remove(player);
 
-            NetworkObject bodyInstance = Instantiate(bodyPrefab); // todo: spawn points based on team
+            Transform spawn = SpawnPoint.GetSpawn(player.syncedTeamId).transform;
+            NetworkObject bodyInstance = Instantiate(bodyPrefab, spawn.position, spawn.rotation);
             _playersToBodies.Add(player, bodyInstance);
         }
     }

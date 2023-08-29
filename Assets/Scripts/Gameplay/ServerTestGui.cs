@@ -14,7 +14,8 @@ namespace Gameplay
             {
                 GUILayout.BeginHorizontal();
 
-                GUILayout.Label($"{player.syncedPlayerName} {player.syncedPlayerState} {player.syncedTeamId} {player.syncedLoadout}");
+                TeamDefinition team = player.GetTeam();
+                GUILayout.Label($"{player.syncedPlayerName} {player.syncedPlayerState} {team.ColoredName} {player.syncedLoadout}");
 
                 if (IsServer)
                 {
@@ -23,6 +24,9 @@ namespace Gameplay
 
                     if (GUILayout.Button("set respawning"))
                         player.syncedPlayerState = PlayerState.Respawning;
+
+                    if (GUILayout.Button("cycle team"))
+                        player.syncedTeamId = (player.syncedTeamId + 1) % TeamDefinition.GetTeamCount();
                 }
 
                 if (body.TryGetComponent(out LivingEntity livingEntity))
