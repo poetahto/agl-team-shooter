@@ -47,10 +47,37 @@ public class ConnectedPlayer : NetworkBehaviour
         _onPlayerStateChanged = new Subject<PlayerState>();
     }
 
-    private void HandleNameChange(string previous, string current, bool asServer) => _onNameChanged.OnNext(current);
-    private void HandleLoadoutChange(Loadout previous, Loadout current, bool asServer) => _onLoadoutChanged.OnNext(current);
-    private void HandleTeamChange(int previous, int current, bool asServer) => _onTeamChanged.OnNext(current);
-    private void HandlePlayerStateChange(PlayerState previous, PlayerState current, bool asServer) => _onPlayerStateChanged.OnNext(current);
+    private void HandleNameChange(string previous, string current, bool asServer)
+    {
+        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
+            return;
+
+        _onNameChanged.OnNext(current);
+    }
+
+    private void HandleLoadoutChange(Loadout previous, Loadout current, bool asServer)
+    {
+        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
+            return;
+
+        _onLoadoutChanged.OnNext(current);
+    }
+
+    private void HandleTeamChange(int previous, int current, bool asServer)
+    {
+        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
+            return;
+
+        _onTeamChanged.OnNext(current);
+    }
+
+    private void HandlePlayerStateChange(PlayerState previous, PlayerState current, bool asServer)
+    {
+        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
+            return;
+
+        _onPlayerStateChanged.OnNext(current);
+    }
 
     [ServerRpc]
     public void Rpc_ServerChangeTeam(int newTeam)

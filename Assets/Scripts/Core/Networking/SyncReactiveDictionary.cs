@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using FishNet;
 using FishNet.Object.Synchronizing;
 using UniRx;
 
 public class SyncReactiveDictionary<TKey, TValue>
 {
     private readonly ReactiveDictionary<TKey, TValue> _reactiveDictionary = new ReactiveDictionary<TKey, TValue>();
+    public IReadOnlyReactiveDictionary<TKey, TValue> Dictionary => _reactiveDictionary;
 
     public SyncReactiveDictionary(SyncIDictionary<TKey, TValue> dictionary)
     {
@@ -28,7 +31,7 @@ public class SyncReactiveDictionary<TKey, TValue>
 
     private void HandleOnChange(SyncDictionaryOperation operation, TKey key, TValue value, bool asServer)
     {
-        if (asServer)
+        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
             return;
 
         switch (operation)

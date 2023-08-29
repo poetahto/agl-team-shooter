@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FishNet;
 using FishNet.Object.Synchronizing;
 using UniRx;
 
@@ -35,7 +36,7 @@ public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
 
     private void HandleOnChange(SyncListOperation op, int index, T oldItem, T newItem, bool asServer)
     {
-        if (asServer)
+        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
             return;
 
         switch (op)

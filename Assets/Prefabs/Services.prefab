@@ -327,7 +327,7 @@ MonoBehaviour:
   _objectPool: {fileID: 0}
   _persistence: 0
   _logging: {fileID: 11400000, guid: 397abee4b47363749847b441b553042b, type: 2}
-  _spawnablePrefabs: {fileID: 11400000, guid: c3729a85416c3fc4bad749cb032d9de7, type: 2}
+  _spawnablePrefabs: {fileID: 11400000, guid: 90b5c16becdb13d4cbcee07afc4d7fd4, type: 2}
 --- !u!114 &6238797477551061089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +487,7 @@ PrefabInstance:
     - target: {fileID: 3586182108621101794, guid: 13deff28d133b3b4fae5f056ff312f33,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 3586182108621101794, guid: 13deff28d133b3b4fae5f056ff312f33,
         type: 3}

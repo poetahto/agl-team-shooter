@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 925fc096350b81f4f82f4fe4ac0c4dda, type: 3}
-  m_Name: FishNet Logging
+  m_Script: {fileID: 11500000, guid: 6db06ae1a73b453281fe436806da9c50, type: 3}
+  m_Name: Respawning Standard Movement
   m_EditorClassIdentifier: 
-  LoggingEnabled: 1
-  _developmentLogging: 3
-  _guiLogging: 2
-  _headlessLogging: 1
+  speed: 3
+  acceleration: 35
+  deceleration: 10
+  controlY: 1
