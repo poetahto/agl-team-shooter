@@ -48,6 +48,13 @@ namespace Gameplay.Modes.AttackDefend
             base.OnLogic();
         }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+            _point.syncAttackerCount = 0;
+            _point.syncDefenderCount = 0;
+        }
+
         private void UpdateAttackerAndDefenderCount()
         {
             int hitCount = Physics.OverlapBoxNonAlloc(_point.transform.position + _settings.triggerOffset, _settings.triggerExtents, _overlapBuffer);
