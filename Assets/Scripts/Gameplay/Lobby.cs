@@ -37,6 +37,33 @@ public class Lobby : NetworkBehaviour
         return null;
     }
 
+    public bool TryFindPlayer(NetworkConnection connection, out ConnectedPlayer result)
+    {
+        result = FindPlayer(connection);
+        return result != null;
+    }
+
+    public bool TryFindPlayer(NetworkObject networkObject, out ConnectedPlayer result)
+    {
+        return TryFindPlayer(networkObject.Owner, out result);
+    }
+
+    public bool PlayerExists(NetworkConnection connection)
+    {
+        foreach (var player in Players)
+        {
+            if (player.Owner == connection)
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool PlayerExists(NetworkObject networkObject)
+    {
+        return PlayerExists(networkObject.Owner);
+    }
+
     [Server]
     public void ServerHandlePlayerJoin(NetworkConnection connection)
     {

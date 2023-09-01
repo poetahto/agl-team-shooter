@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UniRx;
-using UniRx.Diagnostics;
 using UnityEngine;
 
 namespace Gameplay

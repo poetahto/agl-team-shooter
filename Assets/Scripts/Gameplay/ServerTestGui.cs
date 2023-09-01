@@ -1,4 +1,6 @@
-﻿using FishNet.Object;
+﻿using System;
+using FishNet.Object;
+using Gameplay.Modes.AttackDefend;
 using UnityEngine;
 
 namespace Gameplay
@@ -9,6 +11,31 @@ namespace Gameplay
         private PlayerSpawner spawner;
 
         private void OnGUI()
+        {
+            DrawPlayerData();
+            DrawAttackPointData();
+        }
+
+        private void DrawAttackPointData()
+        {
+            foreach (AttackPoint attackPoint in FindObjectsByType<AttackPoint>(FindObjectsSortMode.None))
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label($"{attackPoint.name} [{attackPoint.syncCurrentState}] {attackPoint.syncCapturePercent:F3}: attackers={attackPoint.syncAttackerCount} defenders={attackPoint.syncDefenderCount}");
+
+                if (attackPoint.syncCurrentState == AttackPoint.State.Open)
+                {
+                    GUILayout.Label($"{attackPoint.syncOpenState}");
+                }
+
+                if (IsServer && GUILayout.Button("Unlock"))
+                    attackPoint.ServerUnlock();
+
+                GUILayout.EndHorizontal();
+            }
+        }
+
+        private void DrawPlayerData()
         {
             foreach (var (player, body) in spawner.PlayersToBodies.Dictionary)
             {
@@ -27,6 +54,9 @@ namespace Gameplay
 
                     if (GUILayout.Button("cycle team"))
                         player.syncedTeamId = (player.syncedTeamId + 1) % TeamDefinition.GetTeamCount();
+
+                    if (GUILayout.Button("cycle loadout"))
+                        player.syncedLoadout = (Loadout) (((int) player.syncedLoadout + 1) % Enum.GetValues(typeof(Loadout)).Length);
                 }
 
                 if (body.TryGetComponent(out LivingEntity livingEntity))

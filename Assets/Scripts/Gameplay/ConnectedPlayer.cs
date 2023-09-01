@@ -8,6 +8,10 @@ using UniRx;
 public enum Loadout
 {
     Testing,
+    Tank,
+    Damage,
+    Healer,
+    Mobile,
 }
 
 public enum PlayerState
@@ -50,7 +54,7 @@ public class ConnectedPlayer : NetworkBehaviour
 
     private void HandleNameChange(string previous, string current, bool asServer)
     {
-        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
+        if (InstanceFinder.IsHost && !asServer)
             return;
 
         _onNameChanged.OnNext(current);
@@ -58,7 +62,7 @@ public class ConnectedPlayer : NetworkBehaviour
 
     private void HandleLoadoutChange(Loadout previous, Loadout current, bool asServer)
     {
-        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
+        if (InstanceFinder.IsHost && !asServer)
             return;
 
         _onLoadoutChanged.OnNext(current);
@@ -66,7 +70,7 @@ public class ConnectedPlayer : NetworkBehaviour
 
     private void HandleTeamChange(int previous, int current, bool asServer)
     {
-        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
+        if (InstanceFinder.IsHost && !asServer)
             return;
 
         _onTeamChanged.OnNext(current);
@@ -74,7 +78,7 @@ public class ConnectedPlayer : NetworkBehaviour
 
     private void HandlePlayerStateChange(PlayerState previous, PlayerState current, bool asServer)
     {
-        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
+        if (InstanceFinder.IsHost && !asServer)
             return;
 
         _onPlayerStateChanged.OnNext(current);
@@ -86,6 +90,7 @@ public class ConnectedPlayer : NetworkBehaviour
         syncedTeamId = newTeam;
     }
 
+    // todo: move these into one big helper class
     public static ConnectedPlayer GetLocalPlayer()
     {
         return GetPlayer(InstanceFinder.ClientManager.Connection);

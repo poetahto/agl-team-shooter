@@ -17,3 +17,15 @@ MonoBehaviour:
     - key: 0
       value: {fileID: 1073364796965487285, guid: 2dcadb0033472d44eb2970b79b445a57,
         type: 3}
+    - key: 1
+      value: {fileID: 1073364796965487285, guid: 44e5ccc6ddeb317468e200ad2b705146,
+        type: 3}
+    - key: 2
+      value: {fileID: 1073364796965487285, guid: 4067fbee0bfca064ea716611e0b9f703,
+        type: 3}
+    - key: 3
+      value: {fileID: 1073364796965487285, guid: 735300831b1bebe4daa0600b70b3bdb9,
+        type: 3}
+    - key: 4
+      value: {fileID: 1073364796965487285, guid: b31b14eb5b3045247923908a27174bf8,
+        type: 3}
