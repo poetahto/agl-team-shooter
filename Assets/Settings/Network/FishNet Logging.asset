@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FishNet Logging
   m_EditorClassIdentifier: 
   LoggingEnabled: 1
-  _developmentLogging: 3
+  _developmentLogging: 2
   _guiLogging: 2
   _headlessLogging: 1

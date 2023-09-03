@@ -2,7 +2,9 @@
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using FSM;
+using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gameplay.Modes.AttackDefend
 {
@@ -36,19 +38,26 @@ namespace Gameplay.Modes.AttackDefend
         [SyncVar]
         public int syncDefenderCount;
 
-        [SyncVar]
-        public State syncCurrentState;
+        [SyncVar(OnChange = nameof(HandleStateChange))]
+        public State syncState;
 
         [SyncVar]
         public State syncOpenState;
 
         private OpenState _openState;
+        private Subject<State> _stateChange;
 
-        public override void OnStartServer()
+        public IObservable<State> ObserveStateChanged() => _stateChange;
+
+        private void Awake()
         {
-            base.OnStartServer();
-            _openState = new OpenState(this, openStateSettings);
+            _stateChange = new Subject<State>();
+        }
 
+        // todo: this is jank way to fix timing issues w/ attackDefendLogic - get a better non hacky fix
+        public void Initialize()
+        {
+            _openState = new OpenState(this, openStateSettings);
             _serverFsm = new StateMachine<State>();
             _serverFsm.AddState(State.Locked, onExit: _ => syncCapturePercent = 0);
             _serverFsm.AddState(State.Open, _openState);
@@ -64,17 +73,24 @@ namespace Gameplay.Modes.AttackDefend
             if (IsServer)
             {
                 _serverFsm.OnLogic();
-                syncCurrentState = _serverFsm.ActiveState.name;
+                syncState = _serverFsm.ActiveState.name;
 
-                if (syncCurrentState == State.Open)
+                if (syncState == State.Open)
                     syncOpenState = _openState.ActiveState.name;
             }
         }
 
-        [Server]
         public void ServerUnlock()
         {
             _serverFsm.Trigger("unlock");
+        }
+
+        private void HandleStateChange(State previous, State current, bool asServer)
+        {
+            if (IsHost && !asServer)
+                return;
+
+            _stateChange.OnNext(current);
         }
 
         private void OnDrawGizmos()

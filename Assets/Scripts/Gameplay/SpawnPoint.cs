@@ -29,6 +29,11 @@ namespace Gameplay
             spawnPoints.Add(this);
         }
 
+        private void OnDestroy()
+        {
+            _spawnPointLookup[teamId].Remove(this);
+        }
+
         public static SpawnPoint GetSpawn(int teamId)
         {
             SpawnPoint result = _spawnPointLookup[teamId][_currentSpawnIndex];

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core;
 using UnityEngine;
 
@@ -25,6 +26,11 @@ namespace Gameplay
         private void Awake()
         {
             _teamLookup.Add(id, this);
+        }
+
+        private void OnDestroy()
+        {
+            _teamLookup.Remove(id);
         }
 
         public static TeamDefinition FindTeam(int id)
