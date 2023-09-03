@@ -407,6 +407,7 @@ GameObject:
   - component: {fileID: 8830513945203439276}
   - component: {fileID: 584011740179561703}
   - component: {fileID: 7126987939586424792}
+  - component: {fileID: -6475533767710542516}
   - component: {fileID: 7735308409277559994}
   m_Layer: 0
   m_Name: Damage
@@ -455,6 +456,7 @@ MonoBehaviour:
   - {fileID: 2892550635548047104}
   - {fileID: 584011740179561703}
   - {fileID: 7126987939586424792}
+  - {fileID: 7735308409277559994}
   - {fileID: 7193525024737968589}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
@@ -467,7 +469,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 2
+  <PrefabId>k__BackingField: 4
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -703,6 +705,22 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 1073364796965487285}
   _networkObjectCache: {fileID: 1073364796965487285}
   livingEntity: {fileID: 584011740179561703}
+--- !u!114 &-6475533767710542516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2597112694839628463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b83bf5299e47ed8c34f25a609519bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 1073364796965487285}
+  _networkObjectCache: {fileID: 0}
+  launcher: {fileID: 7735308409277559994}
 --- !u!114 &7735308409277559994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,9 +733,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da521e318944924addc2676621e95e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 5
   _addedNetworkObject: {fileID: 1073364796965487285}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 1073364796965487285}
   sourceTransform: {fileID: 1369021979797568484}
   projectilePrefab: {fileID: 1490984093573622924, guid: 005a0b435d4e69647bdf639a6003d741,
     type: 3}
@@ -824,7 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2289c68a3ff45ddbdd4c9612a1ffaf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 5
+  _componentIndexCache: 6
   _addedNetworkObject: {fileID: 1073364796965487285}
   _networkObjectCache: {fileID: 1073364796965487285}
   gameObjectTargets:

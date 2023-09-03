@@ -383,76 +383,54 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 07000000060000000500000004000000
       TexGenIndex: 5
-    Generation: 4
---- !u!1 &29498830
+    Generation: 23
+--- !u!1 &51079229
 GameObject:
-  m_ObjectHideFlags: 17
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 29498832}
-  - component: {fileID: 29498831}
+  - component: {fileID: 51079230}
+  - component: {fileID: 51079231}
   m_Layer: 0
-  m_Name: '[default-CSGModel]'
+  m_Name: '[generated-meshes]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 124
+  m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &29498831
-MonoBehaviour:
-  m_ObjectHideFlags: 17
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 29498830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8672dcc90e16b0a489a41edf56e016f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PrefabBehaviour: 0
-  PrefabSourceAlignment: 4
-  PrefabDestinationAlignment: 0
-  Version: 1.1
-  infiniteBrush: {fileID: 0}
-  Settings: 1537
-  VertexChannels: 14
-  ReceiveGI: 2
-  MeshColliderCookingOptions: 14
-  ShowGeneratedMeshes: 0
-  DefaultPhysicsMaterial: {fileID: 13400000, guid: 0c5fdfb44d6f19646a41a0720fbf751a,
-    type: 2}
-  exportType: 0
-  originType: 0
-  exportColliders: 0
-  exportPath: 
-  angleError: 1
-  areaError: 1
-  hardAngle: 60
-  packMargin: 20
-  scaleInLightmap: 1
-  autoUVMaxDistance: 0.5
-  autoUVMaxAngle: 89
-  minimumChartSize: 4
---- !u!4 &29498832
+--- !u!4 &51079230
 Transform:
-  m_ObjectHideFlags: 17
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 29498830}
+  m_GameObject: {fileID: 51079229}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1384711159}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 576659708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &51079231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51079229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c3643d4978096d4880d7edbf4f65a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Version: 1
+  owner: {fileID: 576659707}
+  helperSurfaces: []
 --- !u!1 &52919026
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,7 +691,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!1 &257675233
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,7 +952,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!1 &309119521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,7 +1058,7 @@ MonoBehaviour:
     meshQuery:
       layers: 16777223
       maskAndChannels: 234881031
-    surfaceParameter: 30346
+    surfaceParameter: 30348
     meshQueryIndex: 0
     subMeshQueryIndex: 0
     geometryHashValue: -276828349631150619
@@ -1407,7 +1385,7 @@ Transform:
   m_GameObject: {fileID: 459793840}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1537,6 +1515,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b164563f04124260b64ce81be9bbc5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &576659706
+GameObject:
+  m_ObjectHideFlags: 17
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 576659708}
+  - component: {fileID: 576659707}
+  m_Layer: 0
+  m_Name: '[default-CSGModel]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 124
+  m_IsActive: 1
+--- !u!114 &576659707
+MonoBehaviour:
+  m_ObjectHideFlags: 17
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576659706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8672dcc90e16b0a489a41edf56e016f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrefabBehaviour: 0
+  PrefabSourceAlignment: 4
+  PrefabDestinationAlignment: 0
+  Version: 1.1
+  infiniteBrush: {fileID: 0}
+  Settings: 1537
+  VertexChannels: 14
+  ReceiveGI: 2
+  MeshColliderCookingOptions: 14
+  ShowGeneratedMeshes: 0
+  DefaultPhysicsMaterial: {fileID: 13400000, guid: 0c5fdfb44d6f19646a41a0720fbf751a,
+    type: 2}
+  exportType: 0
+  originType: 0
+  exportColliders: 0
+  exportPath: 
+  angleError: 1
+  areaError: 1
+  hardAngle: 60
+  packMargin: 20
+  scaleInLightmap: 1
+  autoUVMaxDistance: 0.5
+  autoUVMaxAngle: 89
+  minimumChartSize: 4
+--- !u!4 &576659708
+Transform:
+  m_ObjectHideFlags: 17
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576659706}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 51079230}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &639321554
 Mesh:
   m_ObjectHideFlags: 16
@@ -1962,7 +2009,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!1001 &701486572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2334,7 +2381,7 @@ MonoBehaviour:
     meshQuery:
       layers: 33554440
       maskAndChannels: 8
-    surfaceParameter: 30150
+    surfaceParameter: 30152
     meshQueryIndex: 1
     subMeshQueryIndex: 0
     geometryHashValue: -276828349631150619
@@ -2864,7 +2911,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 07000000060000000500000004000000
       TexGenIndex: 5
-    Generation: 2
+    Generation: 21
 --- !u!1 &965390224
 GameObject:
   m_ObjectHideFlags: 0
@@ -3125,7 +3172,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 07000000060000000500000004000000
       TexGenIndex: 5
-    Generation: 2
+    Generation: 21
 --- !u!1001 &1096941539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3689,7 +3736,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!1 &1239600843
 GameObject:
   m_ObjectHideFlags: 0
@@ -3950,7 +3997,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 07000000060000000500000004000000
       TexGenIndex: 5
-    Generation: 2
+    Generation: 21
 --- !u!43 &1308732248
 Mesh:
   m_ObjectHideFlags: 16
@@ -4691,7 +4738,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!1001 &1352512490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4842,53 +4889,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1352512490}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1384711158
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1384711159}
-  - component: {fileID: 1384711160}
-  m_Layer: 0
-  m_Name: '[generated-meshes]'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1384711159
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384711158}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 29498832}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1384711160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384711158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c3643d4978096d4880d7edbf4f65a50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Version: 1
-  owner: {fileID: 29498831}
-  helperSurfaces: []
 --- !u!1 &1415243897
 GameObject:
   m_ObjectHideFlags: 0
@@ -5149,7 +5149,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!1 &1430872408
 GameObject:
   m_ObjectHideFlags: 0
@@ -5457,14 +5457,14 @@ MonoBehaviour:
   Version: 1
   owner: {fileID: 459793841}
   helperSurfaces:
-  - SharedMesh: {fileID: 2107104050}
+  - SharedMesh: {fileID: 2115068060}
     RenderSurfaceType: 4
     HasGeneratedNormals: 0
     MeshDescription:
       meshQuery:
         layers: 33554440
         maskAndChannels: 8
-      surfaceParameter: 30150
+      surfaceParameter: 30152
       meshQueryIndex: 1
       subMeshQueryIndex: 0
       geometryHashValue: -276828349631150619
@@ -5785,7 +5785,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 07000000060000000500000004000000
       TexGenIndex: 5
-    Generation: 2
+    Generation: 21
 --- !u!1 &1852285039
 GameObject:
   m_ObjectHideFlags: 0
@@ -6046,7 +6046,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!1 &1891370206
 GameObject:
   m_ObjectHideFlags: 0
@@ -6307,7 +6307,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!43 &1927055285
 Mesh:
   m_ObjectHideFlags: 16
@@ -6733,7 +6733,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!1 &2003663845
 GameObject:
   m_ObjectHideFlags: 0
@@ -6994,7 +6994,7 @@ MonoBehaviour:
       TexGenIndex: 4
     - EdgeIndices: 14000000150000001600000017000000
       TexGenIndex: 5
-    Generation: 6
+    Generation: 25
 --- !u!1001 &2065765093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7167,13 +7167,13 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2065765093}
   m_PrefabAsset: {fileID: 0}
---- !u!43 &2107104050
+--- !u!43 &2115068060
 Mesh:
   m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: <Collider helper surface generated -53068>
+  m_Name: <Collider helper surface generated -73928>
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -7342,4 +7342,4 @@ SceneRoots:
   - {fileID: 500065382}
   - {fileID: 459793842}
   - {fileID: 1497266538}
-  - {fileID: 29498832}
+  - {fileID: 576659708}

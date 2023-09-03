@@ -16,5 +16,12 @@ namespace Core
 
             return false;
         }
+
+        public static GameObject GetRootGameObject(this Collider collider)
+        {
+            return collider.attachedRigidbody == null
+                ? collider.gameObject
+                : collider.attachedRigidbody.gameObject;
+        }
     }
 }

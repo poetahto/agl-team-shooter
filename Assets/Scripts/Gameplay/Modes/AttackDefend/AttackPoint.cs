@@ -4,7 +4,6 @@ using FishNet.Object.Synchronizing;
 using FSM;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Gameplay.Modes.AttackDefend
 {
@@ -54,7 +53,6 @@ namespace Gameplay.Modes.AttackDefend
             _stateChange = new Subject<State>();
         }
 
-        // todo: this is jank way to fix timing issues w/ attackDefendLogic - get a better non hacky fix
         public void Initialize()
         {
             _openState = new OpenState(this, openStateSettings);

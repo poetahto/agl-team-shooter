@@ -101,4 +101,9 @@ public class ConnectedPlayer : NetworkBehaviour
         var lobby = FindAnyObjectByType<Lobby>();
         return lobby.FindPlayer(connection);
     }
+
+    public static ConnectedPlayer GetPlayer(NetworkObject networkObject)
+    {
+        return GetPlayer(networkObject.Owner);
+    }
 }
