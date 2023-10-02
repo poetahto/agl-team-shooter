@@ -8,6 +8,15 @@ namespace Core.Networking
         [SerializeField] private GameObject[] gameObjectTargets;
         [SerializeField] private Behaviour[] behaviorTargets;
 
+        private void Awake()
+        {
+            foreach (var gameObjectTarget in gameObjectTargets)
+                gameObjectTarget.SetActive(false);
+
+            foreach (var behaviorTarget in behaviorTargets)
+                behaviorTarget.enabled = false;
+        }
+
         public override void OnStartClient()
         {
             base.OnStartClient();
