@@ -1,15 +1,14 @@
 ﻿using FishNet.Connection;
-using FishNet.Object;
 using FishNet.Transporting;
-using UnityEngine;
 
 namespace Gameplay
 {
-    public class ServerGameLogic : NetworkBehaviour
+    /// <summary>
+    /// Manages raw incoming connections, and forwards accepted ones to the Lobby to be assigned
+    /// a ConnectedPlayer instance, formally being added to the game.
+    /// </summary>
+    public class ServerGameLogic : GameplayNetworkBehavior
     {
-        [SerializeField]
-        private Lobby lobby;
-
         public override void OnStartServer()
         {
             base.OnStartServer();
@@ -37,12 +36,12 @@ namespace Gameplay
         private void SpawnPlayerForConnection(NetworkConnection connection, bool asServer)
         {
             connection.OnLoadedStartScenes -= SpawnPlayerForConnection;
-            lobby.ServerHandlePlayerJoin(connection);
+            Lobby.ServerHandlePlayerJoin(connection);
         }
 
         private void HandlePlayerLeave(NetworkConnection connection)
         {
-            lobby.ServerHandlePlayerLeave(connection);
+            Lobby.ServerHandlePlayerLeave(connection);
 
             foreach (var networkObject in connection.Objects) // todo: who's responsibility is it to clean these up?
                 Despawn(networkObject);

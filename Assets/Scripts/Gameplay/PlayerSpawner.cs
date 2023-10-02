@@ -6,7 +6,12 @@ using UnityEngine;
 
 namespace Gameplay
 {
-    public class PlayerSpawner : NetworkBehaviour
+    /// <summary>
+    /// Manages the spawning of controllable player prefabs whenever their state
+    /// changes. For instance, creates a respawning body when you die, and picks
+    /// the appropriate loadout prefab when you respawn.
+    /// </summary>
+    public class PlayerSpawner : GameplayNetworkBehavior
     {
         [SerializeField]
         private LoadoutPrefabs loadoutPrefabs;
@@ -14,17 +19,16 @@ namespace Gameplay
         [SerializeField]
         private NetworkObject respawningPrefab;
 
-        [SerializeField]
-        private Lobby lobby;
-
         [SyncObject]
         private readonly SyncDictionary<ConnectedPlayer, NetworkObject> _playersToBodies =
             new SyncDictionary<ConnectedPlayer, NetworkObject>();
 
         public SyncReactiveDictionary<ConnectedPlayer, NetworkObject> PlayersToBodies { get; private set; }
 
-        private void Awake()
+        public override void OnStartNetwork()
         {
+            base.OnStartNetwork();
+
             PlayersToBodies = new SyncReactiveDictionary<ConnectedPlayer, NetworkObject>(_playersToBodies);
         }
 
@@ -32,7 +36,7 @@ namespace Gameplay
         {
             base.OnStartServer();
 
-            lobby.Players.ObserveAdd()
+            Lobby.Players.ObserveAdd()
                 .Subscribe(eventData => HandlePlayerJoin(eventData.Value))
                 .AddTo(this);
 

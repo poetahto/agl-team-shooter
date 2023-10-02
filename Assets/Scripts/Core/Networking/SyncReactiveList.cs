@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using FishNet;
 using FishNet.Object.Synchronizing;
 using UniRx;
 
-public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
+/// <summary>
+/// A wrapper around a FishNet synced list, that provides observables for common
+/// list operations.
+/// </summary>
+/// <typeparam name="T">The type to be stored in the list.</typeparam>
+public class SyncReactiveList<T>
 {
     private readonly ReactiveCollection<T> _collection = new ReactiveCollection<T>();
-    private readonly SyncList<T> _syncList;
+    public IReadOnlyReactiveCollection<T> ReactiveCollection => _collection;
 
     public SyncReactiveList(SyncList<T> list)
     {
-        _syncList = list;
         list.OnChange += HandleOnChange;
     }
 
@@ -36,7 +38,7 @@ public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
 
     private void HandleOnChange(SyncListOperation op, int index, T oldItem, T newItem, bool asServer)
     {
-        if (InstanceFinder.IsServer && InstanceFinder.IsClient && !asServer)
+        if (InstanceFinder.IsHost && !asServer)
             return;
 
         switch (op)
@@ -63,42 +65,4 @@ public class SyncReactiveList<T> : IEnumerable<T>, ICollection<T>
                 throw new ArgumentOutOfRangeException(nameof(op), op, null);
         }
     }
-
-    public IEnumerator<T> GetEnumerator()
-    {
-        return _syncList.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public void Add(T item)
-    {
-        _syncList.Add(item);
-    }
-
-    public void Clear()
-    {
-        _syncList.Clear();
-    }
-
-    public bool Contains(T item)
-    {
-        return _syncList.Contains(item);
-    }
-
-    public void CopyTo(T[] array, int arrayIndex)
-    {
-        _syncList.CopyTo(array, arrayIndex);
-    }
-
-    public bool Remove(T item)
-    {
-        return _syncList.Remove(item);
-    }
-
-    public int Count => _syncList.Count;
-    public bool IsReadOnly => _syncList.IsReadOnly;
 }

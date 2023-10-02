@@ -29,7 +29,7 @@ public class Lobby : NetworkBehaviour
 
     public ConnectedPlayer FindPlayer(NetworkConnection connection)
     {
-        foreach (var player in Players)
+        foreach (var player in Players.ReactiveCollection)
         {
             if (player.Owner == connection)
                 return player;
@@ -61,7 +61,7 @@ public class Lobby : NetworkBehaviour
 
     public bool PlayerExists(NetworkConnection connection)
     {
-        foreach (var player in Players)
+        foreach (var player in Players.ReactiveCollection)
         {
             if (player.Owner == connection)
                 return true;

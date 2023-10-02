@@ -1,4 +1,5 @@
 ﻿using FishNet.Object;
+using UnityEngine;
 
 namespace Gameplay
 {
@@ -6,10 +7,9 @@ namespace Gameplay
     {
         protected Lobby Lobby { get; private set; }
 
-        public override void OnStartNetwork()
+        protected virtual void Awake()
         {
-            base.OnStartNetwork();
-            Lobby = FindAnyObjectByType<Lobby>();
+            Lobby = FindAnyObjectByType<Lobby>(FindObjectsInactive.Include);
         }
     }
 }

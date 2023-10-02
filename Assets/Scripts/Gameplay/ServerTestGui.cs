@@ -41,7 +41,7 @@ namespace Gameplay
 
         private void DrawPlayerData()
         {
-            foreach (var (player, body) in spawner.PlayersToBodies.Dictionary)
+            foreach (var (player, body) in spawner.PlayersToBodies.ReactiveDictionary)
             {
                 GUILayout.BeginHorizontal();
 

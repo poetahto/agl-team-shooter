@@ -8,7 +8,7 @@ namespace Gameplay
 
         protected virtual void Awake()
         {
-            Lobby = FindAnyObjectByType<Lobby>();
+            Lobby = FindAnyObjectByType<Lobby>(FindObjectsInactive.Include);
         }
     }
 }
