@@ -16,8 +16,9 @@ public class PauseMenuLogic : GameplayNetworkBehavior
     private IVisibilityTransition _visibility;
     private bool _settingsShown;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _visibility = CommonTransitions.Fade(canvasGroup);
         _visibility.VisibilityChanged += HandleVisibilityChanged;
     }

@@ -2,7 +2,7 @@
 
 namespace Gameplay
 {
-    public abstract class MonoUIView<T> : MonoBehaviour where T : Component
+    public abstract class MonoUIView<T> : MonoBehaviour where T : Object
     {
         [SerializeField]
         private bool clearOnAwake = true;
