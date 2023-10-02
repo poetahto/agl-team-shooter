@@ -1,15 +1,6 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
-
-namespace Gameplay
+﻿namespace Gameplay
 {
-    public class SecondaryEffect : MonoBehaviour
+    public class SecondaryEffect : ItemEffect
     {
-        public UnityEvent onPlay;
-
-        public void Play()
-        {
-            onPlay.Invoke();
-        }
     }
 }
