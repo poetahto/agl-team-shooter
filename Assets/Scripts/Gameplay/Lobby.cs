@@ -1,4 +1,5 @@
-﻿using FishNet.Connection;
+﻿using FishNet;
+using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UnityEngine;
@@ -35,6 +36,16 @@ public class Lobby : NetworkBehaviour
         }
 
         return null;
+    }
+
+    public ConnectedPlayer FindPlayer(NetworkObject networkObject)
+    {
+        return FindPlayer(networkObject.Owner);
+    }
+
+    public ConnectedPlayer FindLocalPlayer()
+    {
+        return FindPlayer(InstanceFinder.ClientManager.Connection);
     }
 
     public bool TryFindPlayer(NetworkConnection connection, out ConnectedPlayer result)

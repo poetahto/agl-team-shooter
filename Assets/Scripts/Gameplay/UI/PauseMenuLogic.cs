@@ -8,7 +8,7 @@ using Poetools.UI.Items;
 using UniRx;
 using UnityEngine;
 
-public class PauseMenuLogic : GameplayBehavior
+public class PauseMenuLogic : GameplayNetworkBehavior
 {
     [SerializeField]
     private CanvasGroup canvasGroup;

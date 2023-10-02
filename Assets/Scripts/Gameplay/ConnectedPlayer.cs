@@ -5,21 +5,10 @@ using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UniRx;
 
-public enum Loadout
-{
-    Testing,
-    Tank,
-    Damage,
-    Healer,
-    Mobile,
-}
-
-public enum PlayerState
-{
-    Alive,
-    Respawning,
-}
-
+/// <summary>
+/// A player that is sending and receiving information from a game server.
+/// There is always one instance of this component for each connected player.
+/// </summary>
 public class ConnectedPlayer : NetworkBehaviour
 {
     [SyncVar(OnChange = nameof(HandleNameChange))]
@@ -43,6 +32,12 @@ public class ConnectedPlayer : NetworkBehaviour
     public IObservable<Loadout> ObserveLoadoutChanged() => _onLoadoutChanged;
     public IObservable<int> ObserveTeamChanged() => _onTeamChanged;
     public IObservable<PlayerState> ObservePlayerStateChanged() => _onPlayerStateChanged;
+
+    [ServerRpc]
+    public void Rpc_ServerChangeTeam(int newTeam)
+    {
+        syncedTeamId = newTeam;
+    }
 
     private void Awake()
     {
@@ -82,28 +77,5 @@ public class ConnectedPlayer : NetworkBehaviour
             return;
 
         _onPlayerStateChanged.OnNext(current);
-    }
-
-    [ServerRpc]
-    public void Rpc_ServerChangeTeam(int newTeam)
-    {
-        syncedTeamId = newTeam;
-    }
-
-    // todo: move these into one big helper class
-    public static ConnectedPlayer GetLocalPlayer()
-    {
-        return GetPlayer(InstanceFinder.ClientManager.Connection);
-    }
-
-    public static ConnectedPlayer GetPlayer(NetworkConnection connection)
-    {
-        var lobby = FindAnyObjectByType<Lobby>();
-        return lobby.FindPlayer(connection);
-    }
-
-    public static ConnectedPlayer GetPlayer(NetworkObject networkObject)
-    {
-        return GetPlayer(networkObject.Owner);
     }
 }

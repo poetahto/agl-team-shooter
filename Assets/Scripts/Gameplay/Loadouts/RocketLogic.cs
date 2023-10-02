@@ -5,30 +5,29 @@ using UnityEngine;
 
 namespace Gameplay
 {
-    public class RocketLogic : MonoBehaviour
+    public class RocketLogic : GameplayMonoBehavior
     {
         [SerializeField] private Explosion explosion;
 
         private void OnTriggerEnter(Collider other)
         {
             var proj = GetComponent<PredictedProjectile>();
-            ConnectedPlayer player = ConnectedPlayer.GetPlayer(proj.Owner);
+            ConnectedPlayer player = Lobby.FindPlayer(proj.OwnerObject);
 
             if (other.TryGetComponentWithRigidbody(out NetworkObject hitObject))
             {
-                ConnectedPlayer hitPlayer = ConnectedPlayer.GetPlayer(hitObject);
+                ConnectedPlayer hitPlayer = Lobby.FindPlayer(hitObject);
 
                 if (hitPlayer != null && (hitPlayer != player || hitPlayer.syncedTeamId != player.syncedTeamId))
-                    SpawnExplosion(proj.Owner);
+                    SpawnExplosion(proj.OwnerObject);
             }
             else if (!other.isTrigger)
-                SpawnExplosion(proj.Owner);
+                SpawnExplosion(proj.OwnerObject);
         }
 
         private void SpawnExplosion(NetworkObject owner)
         {
-            print("spawned expl");
-            var explosionInstance = Instantiate(explosion, transform.position, Quaternion.identity);
+            Explosion explosionInstance = Instantiate(explosion, transform.position, Quaternion.identity);
             explosionInstance.Play(owner);
             Destroy(gameObject);
         }

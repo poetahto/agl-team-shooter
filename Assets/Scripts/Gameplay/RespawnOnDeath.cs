@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Gameplay
 {
-    public class RespawnOnDeath : NetworkBehaviour
+    public class RespawnOnDeath : GameplayNetworkBehavior
     {
         [SerializeField] private LivingEntity livingEntity;
 
         public override void OnStartServer()
         {
             base.OnStartServer();
-            
+
             livingEntity.ObserveDeath()
                 .Subscribe(HandleOnDeath)
                 .AddTo(this);
@@ -20,7 +20,7 @@ namespace Gameplay
         [Server]
         private void HandleOnDeath(LivingEntity.DeathEvent eventData)
         {
-            ConnectedPlayer player = ConnectedPlayer.GetPlayer(Owner);
+            ConnectedPlayer player = Lobby.FindPlayer(Owner);
             player.syncedPlayerState = PlayerState.Respawning;
         }
     }

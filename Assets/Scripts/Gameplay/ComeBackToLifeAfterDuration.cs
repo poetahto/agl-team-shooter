@@ -1,10 +1,9 @@
-﻿using FishNet.Object;
-using FishNet.Object.Synchronizing;
+﻿using FishNet.Object.Synchronizing;
 using UnityEngine;
 
 namespace Gameplay
 {
-    public class ComeBackToLifeAfterDuration : NetworkBehaviour
+    public class ComeBackToLifeAfterDuration : GameplayNetworkBehavior
     {
         [SyncVar]
         public float syncedRemainingTime = 5;
@@ -26,7 +25,7 @@ namespace Gameplay
                 if (_isDead && syncedRemainingTime <= 0)
                 {
                     _isDead = false;
-                    ConnectedPlayer player = ConnectedPlayer.GetPlayer(Owner);
+                    ConnectedPlayer player = Lobby.FindPlayer(Owner);
                     player.syncedPlayerState = PlayerState.Alive;
                 }
             }

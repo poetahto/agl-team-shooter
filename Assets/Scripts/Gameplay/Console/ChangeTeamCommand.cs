@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using poetools.Console;
 using poetools.Console.Commands;
+using Object = UnityEngine.Object;
 
 namespace Gameplay.Console
 {
@@ -14,7 +15,8 @@ namespace Gameplay.Console
 
         public void Execute(string[] args, RuntimeConsole console)
         {
-            ConnectedPlayer localPlayer = ConnectedPlayer.GetLocalPlayer();
+            Lobby lobby = Object.FindAnyObjectByType<Lobby>();
+            ConnectedPlayer localPlayer = lobby.FindLocalPlayer();
             localPlayer.Rpc_ServerChangeTeam(int.Parse(args[0]));
         }
 

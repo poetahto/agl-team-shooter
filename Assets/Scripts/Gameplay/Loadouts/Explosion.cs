@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Gameplay
 {
-    public class Explosion : MonoBehaviour
+    public class Explosion : GameplayMonoBehavior
     {
         [SerializeField]
         private int damage = 25;
@@ -26,13 +26,13 @@ namespace Gameplay
         {
             var damagedObjects = new List<NetworkObject>();
             Collider[] hits = Physics.OverlapSphere(transform.position, radius);
-            var player = ConnectedPlayer.GetPlayer(owner);
+            var player = Lobby.FindPlayer(owner);
 
             foreach (Collider hit in hits)
             {
                 if (hit.TryGetComponentWithRigidbody(out NetworkObject hitObject))
                 {
-                    var hitPlayer = ConnectedPlayer.GetPlayer(hitObject);
+                    var hitPlayer = Lobby.FindPlayer(hitObject);
 
                     if (!damagedObjects.Contains(hitObject) && hitPlayer != null && (player == hitPlayer || hitPlayer.syncedTeamId != player.syncedTeamId))
                     {
@@ -47,7 +47,6 @@ namespace Gameplay
 
         private void ApplyExplosion(Collider col)
         {
-            print($"applied expl to {col.name}");
             GameObject root = col.GetRootGameObject();
 
             if (InstanceFinder.IsServer)
