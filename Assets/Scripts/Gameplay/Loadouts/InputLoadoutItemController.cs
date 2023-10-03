@@ -18,16 +18,16 @@ namespace Gameplay
             {
                 itemSystem.ObserveSelectedItemChange().Subscribe(eventData =>
                 {
-                    if (eventData.oldItem.TryGetComponent(out InputItemController oldItemController))
+                    if (eventData.oldItem.TryGetComponent(out IInputItemController oldItemController))
                         oldItemController.OnClientSelectStop();
 
-                    if (eventData.newItem.TryGetComponent(out InputItemController newItemController))
+                    if (eventData.newItem.TryGetComponent(out IInputItemController newItemController))
                         newItemController.OnClientSelectStart();
                 });
 
                 foreach (var item in itemSystem.Items)
                 {
-                    if (item.TryGetComponent(out InputItemController itemController))
+                    if (item.TryGetComponent(out IInputItemController itemController))
                         itemController.OnClientStart();
                 }
             }
@@ -40,7 +40,7 @@ namespace Gameplay
                 if (InputUtil.TryGetAlphaKeyDown(out int key))
                     itemSystem.HandleSelectedIndex(key - 1);
 
-                if (itemSystem.SelectedItem.TryGetComponent(out InputItemController itemController))
+                if (itemSystem.SelectedItem.TryGetComponent(out IInputItemController itemController))
                     itemController.OnClientLogic();
             }
         }

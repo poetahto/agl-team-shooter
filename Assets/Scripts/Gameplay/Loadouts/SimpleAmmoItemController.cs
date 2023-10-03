@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace Gameplay
 {
-    public class SimpleAmmoItemController : InputItemController
+    public class SimpleAmmoItemController : MonoBehaviour, IInputItemController
     {
         [SerializeField]
         private BoundedDiscreteResource ammo;
@@ -12,22 +12,26 @@ namespace Gameplay
         [SerializeField]
         private UnityEvent onClientFire;
 
-        public override void OnClientStart()
+        public void OnClientStart()
         {
-            base.OnClientStart();
-
             ammo.ObserveUseSuccess().Subscribe(_ => onClientFire.Invoke());
         }
 
-        public override void OnClientLogic()
+        public void OnClientLogic()
         {
-            base.OnClientLogic();
-
             if (Input.GetKeyDown(KeyCode.Mouse0))
                 ammo.Use();
 
             if (Input.GetKeyDown(KeyCode.R))
                 ammo.Refill();
+        }
+
+        public void OnClientSelectStart()
+        {
+        }
+
+        public void OnClientSelectStop()
+        {
         }
     }
 }

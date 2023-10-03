@@ -3,24 +3,26 @@ using UnityEngine.Events;
 
 namespace Gameplay
 {
-    public class ContinuousItemController : InputItemController
+    public class ContinuousItemController : MonoBehaviour, IInputItemController
     {
-        [SerializeField] 
+        [SerializeField]
         private bool cancelOnSwitch = true;
-        
+
         [SerializeField]
         private UnityEvent onUseStart;
-        
+
         [SerializeField]
         private UnityEvent onUseEnd;
 
         private bool _wasUsing;
         public bool IsUsing { get; private set; }
-        
-        public override void OnClientLogic()
+
+        public void OnClientStart()
         {
-            base.OnClientLogic();
-            
+        }
+
+        public void OnClientLogic()
+        {
             IsUsing = Input.GetKey(KeyCode.Mouse0);
 
             if (!_wasUsing && IsUsing) // we just started
@@ -30,14 +32,16 @@ namespace Gameplay
 
             if (_wasUsing && !IsUsing) // we just stopped
                 onUseEnd.Invoke();
-            
+
             _wasUsing = IsUsing;
         }
 
-        public override void OnClientSelectStop()
+        public void OnClientSelectStart()
         {
-            base.OnClientSelectStop();
+        }
 
+        public void OnClientSelectStop()
+        {
             if (IsUsing && cancelOnSwitch)
             {
                 IsUsing = false;
