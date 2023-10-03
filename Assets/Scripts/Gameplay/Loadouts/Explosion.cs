@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Application.Gameplay.Combat;
 using Core;
 using FishNet;
@@ -56,20 +55,20 @@ namespace Gameplay
 
             for (int i = 0; i < hits; i++)
             {
-                var hit = _hitBuffer[i];
+                Collider hit = _hitBuffer[i];
 
-                if (hit.TryGetComponentWithRigidbody(out NetworkObject hitObject))
+                if (hit.ShouldTakeDamageFrom(player, Lobby))
                 {
-                    var hitPlayer = Lobby.FindPlayer(hitObject);
-
-                    if (!damagedObjects.Contains(hitObject) && hitPlayer != null && (player == hitPlayer || hitPlayer.syncedTeamId != player.syncedTeamId))
+                    if (hit.TryGetComponentWithRigidbody(out NetworkObject networkObject))
                     {
-                        ApplyExplosion(hit);
-                        damagedObjects.Add(hitObject);
+                        if (damagedObjects.Contains(networkObject))
+                            continue;
+
+                        else damagedObjects.Add(networkObject);
                     }
-                }
-                else if (!hit.isTrigger)
+
                     ApplyExplosion(hit);
+                }
             }
         }
 

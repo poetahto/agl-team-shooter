@@ -1,20 +1,20 @@
-﻿using DefaultNamespace;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gameplay
 {
-    public class RocketLauncherItemController : InputItemController
+    public class SimpleAmmoItemController : InputItemController
     {
         [SerializeField]
         private BoundedDiscreteResource ammo;
 
         [SerializeField]
-        private PredictedProjectileLauncher launcher;
+        private UnityEvent onClientFire;
 
-        private void Start()
+        public override void OnClientStart()
         {
-            ammo.ObserveUseSuccess().Subscribe(_ => launcher.ClientFire());
+            ammo.ObserveUseSuccess().Subscribe(_ => onClientFire.Invoke());
         }
 
         public override void OnClientLogic()

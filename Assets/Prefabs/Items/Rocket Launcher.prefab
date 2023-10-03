@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 4891132466891355536}
   - component: {fileID: 2724182328646017341}
   - component: {fileID: 980371713248104372}
+  - component: {fileID: 8655361257161584015}
   m_Layer: 0
   m_Name: Rocket Launcher
   m_TagString: Untagged
@@ -183,7 +184,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammo: {fileID: 2724182328646017341}
-  launcher: {fileID: 4891132466891355536}
+  onClientFire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4891132466891355536}
+        m_TargetAssemblyTypeName: DefaultNamespace.PredictedProjectileLauncher, poetools.player-3d-netcode
+        m_MethodName: ClientFire
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4891132466891355536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,9 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da521e318944924addc2676621e95e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 7
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 8655361257161584015}
+  _networkObjectCache: {fileID: 8655361257161584015}
   sourceTransform: {fileID: 0}
   projectilePrefab: {fileID: 1490984093573622924, guid: 005a0b435d4e69647bdf639a6003d741,
     type: 3}
@@ -218,19 +233,7 @@ MonoBehaviour:
   maxCapacity: 50
   onUseSuccess:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4891132466891355536}
-        m_TargetAssemblyTypeName: DefaultNamespace.PredictedProjectileLauncher, poetools.player-3d-netcode
-        m_MethodName: ClientFire
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onUseFail:
     m_PersistentCalls:
       m_Calls: []
@@ -250,6 +253,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiView: {fileID: 6634914098022570516}
+--- !u!114 &8655361257161584015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4568569436430194332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  <PredictedSpawn>k__BackingField: {fileID: 0}
+  _networkBehaviours:
+  - {fileID: 4891132466891355536}
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
+  SerializedTransformProperties:
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 0
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 0
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 2693350319580042106
+  _sceneNetworkObjects: []
 --- !u!1 &5031891444118199426
 GameObject:
   m_ObjectHideFlags: 0

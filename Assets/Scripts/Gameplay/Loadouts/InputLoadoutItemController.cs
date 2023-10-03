@@ -9,6 +9,20 @@ namespace Gameplay
         [SerializeField]
         private LoadoutItemSystem itemSystem;
 
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+
+            if (IsOwner)
+            {
+                foreach (var item in itemSystem.Items)
+                {
+                    if (item.TryGetComponent(out InputItemController itemController))
+                        itemController.OnClientStart();
+                }
+            }
+        }
+
         private void Update()
         {
             if (IsOwner)
