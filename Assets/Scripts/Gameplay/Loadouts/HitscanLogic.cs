@@ -8,6 +8,8 @@ using UnityEngine.Assertions;
 
 namespace Gameplay
 {
+    // Note: full client authority / trust here, not a good place for it but easier than rollback raycasting.
+    // Todo: bullet knockback + whatever extra effects
     public class HitscanLogic : GameplayNetworkBehavior
     {
         private const int BufferSize = 50;
