@@ -14,13 +14,13 @@ namespace Gameplay
         private int maxCapacity = 50;
 
         [SerializeField]
-        private UnityEvent onUseSuccess;
+        private UnityEvent onUseSuccess = new UnityEvent();
 
         [SerializeField]
-        private UnityEvent onUseFail;
+        private UnityEvent onUseFail = new UnityEvent();
 
         [SerializeField]
-        private UnityEvent onRefill;
+        private UnityEvent onRefill = new UnityEvent();
 
         public IntReactiveProperty CurrentAmount { get; private set; }
 

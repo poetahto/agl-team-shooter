@@ -61,6 +61,15 @@ namespace Gameplay
             syncedCurrentHealth = finalHealth;
         }
 
+        [Server]
+        public void ServerHeal(int amount)
+        {
+            if (syncedCurrentHealth > 0)
+            {
+                syncedCurrentHealth = Mathf.Min(syncedCurrentHealth + amount, syncedMaxHealth);
+            }
+        }
+
         [ObserversRpc(ExcludeServer = true)]
         private void Rpc_ObserverDeath()
         {

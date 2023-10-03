@@ -48,7 +48,7 @@ namespace Gameplay
 
         public void Play(NetworkObject owner)
         {
-            var damagedObjects = new List<NetworkObject>();
+            var damagedObjects = new List<ConnectedPlayer>();
             int hits = Physics.OverlapSphereNonAlloc(transform.position, radius, _hitBuffer);
             Assert.IsTrue(hits <= BufferSize);
             var player = Lobby.FindPlayer(owner);
@@ -57,15 +57,12 @@ namespace Gameplay
             {
                 Collider hit = _hitBuffer[i];
 
-                if (hit.ShouldTakeDamageFrom(player, Lobby))
+                if (hit.TryGetConnectedPlayer(out ConnectedPlayer hitPlayer) && hitPlayer.ShouldTakeDamageFrom(player))
                 {
-                    if (hit.TryGetComponentWithRigidbody(out NetworkObject networkObject))
-                    {
-                        if (damagedObjects.Contains(networkObject))
-                            continue;
+                    if (damagedObjects.Contains(hitPlayer))
+                        continue;
 
-                        else damagedObjects.Add(networkObject);
-                    }
+                    else damagedObjects.Add(hitPlayer);
 
                     ApplyExplosion(hit);
                 }

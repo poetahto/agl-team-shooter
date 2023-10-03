@@ -1,5 +1,6 @@
 ﻿using Core;
 using FishNet.Object;
+using UniRx;
 using UnityEngine;
 
 namespace Gameplay
@@ -15,6 +16,15 @@ namespace Gameplay
 
             if (IsOwner)
             {
+                itemSystem.ObserveSelectedItemChange().Subscribe(eventData =>
+                {
+                    if (eventData.oldItem.TryGetComponent(out InputItemController oldItemController))
+                        oldItemController.OnClientSelectStop();
+
+                    if (eventData.newItem.TryGetComponent(out InputItemController newItemController))
+                        newItemController.OnClientSelectStart();
+                });
+
                 foreach (var item in itemSystem.Items)
                 {
                     if (item.TryGetComponent(out InputItemController itemController))

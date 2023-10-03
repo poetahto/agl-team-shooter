@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Core;
-using FishNet;
+﻿using FishNet;
 using FishNet.Object;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -21,25 +18,20 @@ namespace Gameplay
         private int hitDamage = 5;
 
         private RaycastHit[] _hitBuffer = new RaycastHit[BufferSize];
-        private Comparer<RaycastHit> _hitDistanceComparer = Comparer<RaycastHit>.Create((hitA, hitB) => hitA.distance.CompareTo(hitB.distance));
 
         public void ClientFire()
         {
             Ray ray = new Ray(viewTransform.position, viewTransform.forward);
             int hits = Physics.RaycastNonAlloc(ray, _hitBuffer);
+            Assert.IsTrue(hits <= BufferSize);
 
-            if (hits > 0)
+            if (_hitBuffer.TryGetNearest(out RaycastHit nearest, hits))
             {
-                Assert.IsTrue(hits <= BufferSize);
                 ConnectedPlayer player = Lobby.FindPlayer(Owner);
-                Array.Sort(_hitBuffer, 0, hits, _hitDistanceComparer);
-                Collider hitCollider = _hitBuffer[0].collider;
+                Collider hitCollider = nearest.collider;
 
-                if (hitCollider.ShouldTakeDamageFrom(player, Lobby))
-                {
-                    if (hitCollider.TryGetComponentWithRigidbody(out NetworkObject networkObject))
-                        Rpc_ServerDamage(networkObject.ObjectId);
-                }
+                if (hitCollider.TryGetConnectedPlayer(out ConnectedPlayer hitPlayer) && hitPlayer.ShouldTakeDamageFrom(player))
+                    Rpc_ServerDamage(PlayerSpawner.PlayersToBodies.ReactiveDictionary[hitPlayer].ObjectId);
             }
         }
 

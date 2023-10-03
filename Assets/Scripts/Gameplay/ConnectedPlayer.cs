@@ -1,6 +1,5 @@
 ﻿using System;
 using FishNet;
-using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UniRx;

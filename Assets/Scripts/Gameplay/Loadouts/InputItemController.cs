@@ -4,7 +4,20 @@ namespace Gameplay
 {
     public abstract class InputItemController : MonoBehaviour
     {
-        public abstract void OnClientStart();
-        public abstract void OnClientLogic();
+        public virtual void OnClientStart()
+        {
+        }
+
+        public virtual void OnClientLogic()
+        {
+        }
+
+        public virtual void OnClientSelectStart()
+        {
+        }
+
+        public virtual void OnClientSelectStop()
+        {
+        }
     }
 }

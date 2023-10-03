@@ -14,11 +14,15 @@ namespace Gameplay
 
         public override void OnClientStart()
         {
+            base.OnClientStart();
+
             ammo.ObserveUseSuccess().Subscribe(_ => onClientFire.Invoke());
         }
 
         public override void OnClientLogic()
         {
+            base.OnClientLogic();
+
             if (Input.GetKeyDown(KeyCode.Mouse0))
                 ammo.Use();
 
