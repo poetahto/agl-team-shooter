@@ -1,10 +1,11 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Gameplay
 {
-    public class ResourceEventWrapper : MonoBehaviour
+    public class BoundedDiscreteResource : MonoBehaviour
     {
         [SerializeField]
         private int initialCapacity = 50;
@@ -22,6 +23,10 @@ namespace Gameplay
         private UnityEvent onRefill;
 
         public IntReactiveProperty CurrentAmount { get; private set; }
+
+        public IObservable<Unit> ObserveUseSuccess() => onUseSuccess.AsObservable();
+        public IObservable<Unit> ObserveUseFail() => onUseFail.AsObservable();
+        public IObservable<Unit> ObserveRefill() => onRefill.AsObservable();
 
         private void Start()
         {
