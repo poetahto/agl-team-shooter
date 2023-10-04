@@ -66,7 +66,6 @@ namespace Gameplay
             if (IsServer)
             {
                 _fsm.OnLogic();
-                Debug.Log($"{_fsm.ActiveStateName} {(_healingTarget ? _healingTarget.name : "no target")}");
             }
         }
 

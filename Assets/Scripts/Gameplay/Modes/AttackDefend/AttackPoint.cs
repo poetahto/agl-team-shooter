@@ -1,5 +1,4 @@
 ﻿using System;
-using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using FSM;
 using UniRx;
@@ -7,7 +6,7 @@ using UnityEngine;
 
 namespace Gameplay.Modes.AttackDefend
 {
-    public class AttackPoint : NetworkBehaviour
+    public class AttackPoint : GameplayNetworkBehavior
     {
         public enum State
         {
@@ -28,28 +27,34 @@ namespace Gameplay.Modes.AttackDefend
 
         private StateMachine<State> _serverFsm;
 
+        [NonSerialized]
         [SyncVar]
-        public float syncCapturePercent;
+        public float SyncCapturePercent;
 
+        [NonSerialized]
         [SyncVar]
-        public int syncAttackerCount;
+        public int SyncAttackerCount;
 
+        [NonSerialized]
         [SyncVar]
-        public int syncDefenderCount;
+        public int SyncDefenderCount;
 
+        [NonSerialized]
         [SyncVar(OnChange = nameof(HandleStateChange))]
-        public State syncState;
+        public State SyncState;
 
+        [NonSerialized]
         [SyncVar]
-        public State syncOpenState;
+        public State SyncOpenState;
 
         private OpenState _openState;
         private Subject<State> _stateChange;
 
         public IObservable<State> ObserveStateChanged() => _stateChange;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _stateChange = new Subject<State>();
         }
 
@@ -57,11 +62,11 @@ namespace Gameplay.Modes.AttackDefend
         {
             _openState = new OpenState(this, openStateSettings);
             _serverFsm = new StateMachine<State>();
-            _serverFsm.AddState(State.Locked, onExit: _ => syncCapturePercent = 0);
+            _serverFsm.AddState(State.Locked, onExit: _ => SyncCapturePercent = 0);
             _serverFsm.AddState(State.Open, _openState);
             _serverFsm.AddState(State.Captured);
             _serverFsm.AddTriggerTransition("unlock", State.Locked, State.Open);
-            _serverFsm.AddTransition(State.Open, State.Captured, _ => syncCapturePercent >= 1);
+            _serverFsm.AddTransition(State.Open, State.Captured, _ => SyncCapturePercent >= 1);
             _serverFsm.SetStartState(State.Locked);
             _serverFsm.Init();
         }
@@ -71,10 +76,10 @@ namespace Gameplay.Modes.AttackDefend
             if (IsServer)
             {
                 _serverFsm.OnLogic();
-                syncState = _serverFsm.ActiveState.name;
+                SyncState = _serverFsm.ActiveState.name;
 
-                if (syncState == State.Open)
-                    syncOpenState = _openState.ActiveState.name;
+                if (SyncState == State.Open)
+                    SyncOpenState = _openState.ActiveState.name;
             }
         }
 

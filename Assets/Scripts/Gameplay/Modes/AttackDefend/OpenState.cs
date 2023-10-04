@@ -12,10 +12,13 @@ namespace Gameplay.Modes.AttackDefend
         [Serializable]
         public class Settings
         {
+            [TeamReference]
             public int attackingTeam;
+
+            [TeamReference]
             public int defendingTeam;
+
             public float captureRate;
-            public Lobby lobby; // todo: better way of referencing
             public Vector3 triggerOffset;
             public Vector3 triggerExtents;
         }
@@ -33,11 +36,11 @@ namespace Gameplay.Modes.AttackDefend
             _ownerIdBuffer = new List<int>();
 
             this.AddState(AttackPoint.State.OpenIdle);
-            this.AddState(AttackPoint.State.OpenCapturing, onLogic: _ => attackPoint.syncCapturePercent += attackPoint.syncAttackerCount * settings.captureRate * Time.deltaTime);
+            this.AddState(AttackPoint.State.OpenCapturing, onLogic: _ => attackPoint.SyncCapturePercent += attackPoint.SyncAttackerCount * settings.captureRate * Time.deltaTime);
             this.AddState(AttackPoint.State.OpenContested);
-            this.AddTransitionFromAny(AttackPoint.State.OpenIdle, _ => attackPoint.syncAttackerCount == 0);
-            this.AddTransitionFromAny(AttackPoint.State.OpenCapturing, _ => attackPoint.syncAttackerCount != 0 && attackPoint.syncDefenderCount == 0);
-            this.AddTransitionFromAny(AttackPoint.State.OpenContested, _ => attackPoint.syncAttackerCount != 0 && attackPoint.syncDefenderCount != 0);
+            this.AddTransitionFromAny(AttackPoint.State.OpenIdle, _ => attackPoint.SyncAttackerCount == 0);
+            this.AddTransitionFromAny(AttackPoint.State.OpenCapturing, _ => attackPoint.SyncAttackerCount != 0 && attackPoint.SyncDefenderCount == 0);
+            this.AddTransitionFromAny(AttackPoint.State.OpenContested, _ => attackPoint.SyncAttackerCount != 0 && attackPoint.SyncDefenderCount != 0);
 
             SetStartState(AttackPoint.State.OpenIdle);
         }
@@ -51,15 +54,15 @@ namespace Gameplay.Modes.AttackDefend
         public override void OnExit()
         {
             base.OnExit();
-            _point.syncAttackerCount = 0;
-            _point.syncDefenderCount = 0;
+            _point.SyncAttackerCount = 0;
+            _point.SyncDefenderCount = 0;
         }
 
         private void UpdateAttackerAndDefenderCount()
         {
             int hitCount = Physics.OverlapBoxNonAlloc(_point.transform.position + _settings.triggerOffset, _settings.triggerExtents, _overlapBuffer);
-            _point.syncAttackerCount = 0;
-            _point.syncDefenderCount = 0;
+            _point.SyncAttackerCount = 0;
+            _point.SyncDefenderCount = 0;
             _ownerIdBuffer.Clear();
 
             for (int i = 0; i < hitCount; i++)
@@ -68,15 +71,15 @@ namespace Gameplay.Modes.AttackDefend
 
                 if (col.TryGetComponentWithRigidbody(out NetworkObject networkObject)
                     && !_ownerIdBuffer.Contains(networkObject.OwnerId)
-                    && _settings.lobby.TryFindPlayer(networkObject, out ConnectedPlayer player))
+                    && _point.Lobby.TryFindPlayer(networkObject, out ConnectedPlayer player))
                 {
                     _ownerIdBuffer.Add(networkObject.OwnerId);
 
                     if (player.syncedTeamId == _settings.attackingTeam)
-                        _point.syncAttackerCount++;
+                        _point.SyncAttackerCount++;
 
                     else if (player.syncedTeamId == _settings.defendingTeam)
-                        _point.syncDefenderCount++;
+                        _point.SyncDefenderCount++;
                 }
             }
         }

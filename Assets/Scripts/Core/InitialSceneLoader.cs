@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using FishNet.Utility;
+﻿using FishNet.Utility;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DefaultNamespace
 {
@@ -10,12 +10,9 @@ namespace DefaultNamespace
         [SerializeField]
         private string firstScene;
 
-        private IEnumerator Start()
+        private void Start()
         {
-            yield return null;
-#if !UNITY_EDITOR
-            UnityEngine.SceneManagement.SceneManager.LoadScene(firstScene);
-#endif
+            SceneManager.LoadScene(firstScene);
         }
     }
 }

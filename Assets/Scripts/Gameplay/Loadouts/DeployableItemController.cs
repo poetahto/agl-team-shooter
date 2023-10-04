@@ -35,7 +35,7 @@ namespace Gameplay
             _fsm.AddState(State.Idle);
             _fsm.AddState(State.Planning, new PlanningState{Controller = this});
             _fsm.AddTransition(State.Idle, State.Planning, _ => Input.GetKeyDown(KeyCode.Mouse0));
-            _fsm.AddTransition(State.Planning, State.Idle, _ => Input.GetKeyDown(KeyCode.Escape));
+            _fsm.AddTransition(State.Planning, State.Idle, _ => Input.GetKeyDown(KeyCode.Mouse1));
             _fsm.SetStartState(State.Idle);
             _fsm.Init();
         }
@@ -78,6 +78,7 @@ namespace Gameplay
                 base.OnEnter();
                 _previewInstance = Instantiate(Controller.deployablePreviewPrefab);
                 _waitFrame = true;
+                _previewInstance.SetActive(false);
             }
 
             public override void OnLogic()
@@ -94,7 +95,8 @@ namespace Gameplay
                 if (_hitBuffer.TryGetNearest(out RaycastHit nearest, hits))
                 {
                     float angle = Vector3.Angle(nearest.normal, Vector3.up);
-                    _hasTarget = angle <= 90;
+                    _hasTarget = angle <= 45;
+                    print(angle);
                     _targetPosition = nearest.point;
                 }
                 else _hasTarget = false;

@@ -5,8 +5,8 @@ namespace Gameplay
 {
     public class GameplayNetworkBehavior : NetworkBehaviour
     {
-        protected Lobby Lobby { get; private set; }
-        protected PlayerSpawner PlayerSpawner { get; private set; }
+        public Lobby Lobby { get; private set; }
+        public PlayerSpawner PlayerSpawner { get; private set; }
 
         protected virtual void Awake()
         {

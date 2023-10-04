@@ -15,6 +15,7 @@ namespace Gameplay
             _currentSpawnIndex = 0;
         }
 
+        [TeamReference]
         [SerializeField]
         private int teamId;
 

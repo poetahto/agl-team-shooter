@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Core;
 using UnityEngine;
 
@@ -15,9 +14,7 @@ namespace Gameplay
             _teamLookup = new Dictionary<int, TeamDefinition>();
         }
 
-        [SerializeField]
-        private int id;
-
+        public int id;
         public string displayName = "Team";
         public Color displayColor = Color.white;
 

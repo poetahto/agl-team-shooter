@@ -21,12 +21,12 @@ namespace Gameplay
             foreach (AttackPoint attackPoint in FindObjectsByType<AttackPoint>(FindObjectsSortMode.None))
             {
                 GUILayout.BeginHorizontal();
-                GUILayout.Label($"{attackPoint.name} [{attackPoint.syncState}]");
+                GUILayout.Label($"{attackPoint.name} [{attackPoint.SyncState}]");
 
-                switch (attackPoint.syncState)
+                switch (attackPoint.SyncState)
                 {
                     case AttackPoint.State.Open:
-                        GUILayout.Label($"{attackPoint.syncOpenState} {attackPoint.syncCapturePercent:F3}: attackers={attackPoint.syncAttackerCount} defenders={attackPoint.syncDefenderCount}");
+                        GUILayout.Label($"{attackPoint.SyncOpenState} {attackPoint.SyncCapturePercent:F3}: attackers={attackPoint.SyncAttackerCount} defenders={attackPoint.SyncDefenderCount}");
                         break;
 
                     case AttackPoint.State.Locked:

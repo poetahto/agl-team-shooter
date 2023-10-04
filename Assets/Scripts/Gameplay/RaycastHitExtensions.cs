@@ -11,7 +11,7 @@ namespace Gameplay
         {
             nearest = default;
 
-            if (hits.Length <= 0)
+            if ((length < 0 && hits.Length <= 0) || length == 0)
                 return false;
 
             if (length <= 0)
