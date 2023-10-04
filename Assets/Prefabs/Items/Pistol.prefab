@@ -397,7 +397,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clearOnAwake: 1
   autoBind: {fileID: 8032602050909010414}
-  text: {fileID: 8926919394459009043}
+  currentText: {fileID: 8926919394459009043}
+  remainingText: {fileID: 8710442104585808413}
 --- !u!1 &8802810815838051652
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a8582182d1417988bbec6329bbe936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialCapacity: 50
+  unitsPerRound: 10
   maxCapacity: 50
   onUseSuccess:
     m_PersistentCalls:
@@ -635,6 +636,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onRefill:
+    m_PersistentCalls:
+      m_Calls: []
+  onReload:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1766029104735391262

@@ -23,7 +23,7 @@ namespace Gameplay
                 ammo.Use();
 
             if (Input.GetKeyDown(KeyCode.R))
-                ammo.Refill();
+                ammo.Reload();
         }
 
         public void OnClientSelectStart()

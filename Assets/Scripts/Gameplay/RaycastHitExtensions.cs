@@ -44,5 +44,31 @@ namespace Gameplay
             Lobby lobby = Object.FindAnyObjectByType<Lobby>();
             return collider.TryGetComponentWithRigidbody(out NetworkObject hitObject) && lobby.TryFindPlayer(hitObject, out player);
         }
+
+        public static bool TryGetConnectedPlayerBody(this Collider collider, out NetworkObject body)
+        {
+            PlayerSpawner spawner = Object.FindAnyObjectByType<PlayerSpawner>();
+
+            if (collider.TryGetConnectedPlayer(out ConnectedPlayer connectedPlayer))
+            {
+                return spawner.PlayersToBodies.ReactiveDictionary.TryGetValue(connectedPlayer, out body);
+            }
+
+            body = null;
+            return false;
+        }
+
+        public static bool TryGetComponentInChildren<T>(this GameObject gameObject, out T value)
+        {
+            value = gameObject.GetComponentInChildren<T>();
+            return value != null;
+        }
+
+        public static bool TryGetComponentInChildren<T>(this Component component, out T value)
+        {
+            value = component.GetComponentInChildren<T>();
+            return value != null;
+        }
+
     }
 }

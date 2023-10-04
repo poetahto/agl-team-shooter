@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a8582182d1417988bbec6329bbe936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialCapacity: 50
+  unitsPerRound: 10
   maxCapacity: 50
   onUseSuccess:
     m_PersistentCalls:
@@ -238,6 +238,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onRefill:
+    m_PersistentCalls:
+      m_Calls: []
+  onReload:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &980371713248104372
@@ -475,7 +478,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clearOnAwake: 1
   autoBind: {fileID: 2724182328646017341}
-  text: {fileID: 6503483866300639556}
+  currentText: {fileID: 6503483866300639556}
+  remainingText: {fileID: 3593689744364211416}
 --- !u!1 &6716263566856992617
 GameObject:
   m_ObjectHideFlags: 0
